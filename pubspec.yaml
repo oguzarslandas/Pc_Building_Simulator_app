@@ -1,0 +1,93 @@
+name: pc_building_simulator
+description: A new Flutter project.
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.6 <4.0.0'
+
+dependencies:
+  desktop_window: '^0.4.0'
+  dotted_border: '^2.0.0+3'
+  http:
+  flutter:
+    sdk: 'flutter'
+  flutter_svg: '^1.1.6'
+  flutter_spinkit: ^5.1.0
+  shared_preferences: ^2.0.17
+  fluttertoast: ^8.1.2
+  material_dialogs: ^1.1.4
+  nb_utils: ^4.6.25
+  syncfusion_flutter_charts: ^20.4.44
+  google_maps_flutter: ^2.2.3
+  flutter_boxicons: ^3.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: 'flutter'
+
+flutter:
+  uses-material-design: true
+  assets:
+    - 'assets/images/'
+    - 'assets/pages/'
+    - 'assets/secrets/'
+    - 'assets/widgets/'
+  fonts:
+    - family: 'lato'
+      fonts:
+        - asset: 'assets/fonts/Lato-Regular.ttf'
+
+    - family: 'metal'
+      fonts:
+        - asset: 'assets/fonts/MetalMania-Regular.ttf'
+
+    - family: Red Hat Display
+      fonts:
+        - asset: assets/fonts/RedHatDisplay-Regular.ttf
+        - asset: assets/fonts/RedHatDisplay-Italic.ttf
+          style: italic
+        - asset: assets/fonts/RedHatDisplay-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/RedHatDisplay-Black.ttf
+          weight: 900
+        - asset: assets/fonts/RedHatDisplay-BlackItalic.ttf
+          style: italic
+          weight: 900
+        - asset: assets/fonts/RedHatDisplay-BoldItalic.ttf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/RedHatDisplay-Medium.ttf
+          weight: 600
+        - asset: assets/fonts/RedHatDisplay-MediumItalic.ttf
+          style: italic
+          weight: 600
+
+ignore_updates:
+  - 'archive'
+  - 'async'
+  - 'boolean_selector'
+  - 'characters'
+  - 'charcode'
+  - 'collection'
+  - 'clock'
+  - 'crypto'
+  - 'fake_async'
+  - 'file'
+  - 'matcher'
+  - 'material_color_utilities'
+  - 'meta'
+  - 'path'
+  - 'source_span'
+  - 'stack_trace'
+  - 'stream_channel'
+  - 'string_scanner'
+  - 'sync_http'
+  - 'term_glyph'
+  - 'test_api'
+  - 'typed_data'
+  - 'vector_math'
+  - 'webdriver'
