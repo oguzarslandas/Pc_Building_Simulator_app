@@ -2,9 +2,12 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:pc_building_simulator/Network/Api/ApiConfig.dart';
+import 'package:pc_building_simulator/Screens/BestSystemScreen.dart';
 import 'package:pc_building_simulator/Screens/PcBuildScreen.dart';
 import 'package:pc_building_simulator/Screens/PsuCalculatorScreen.dart';
 import 'package:pc_building_simulator/Screens/SystemBenchmarkScreen.dart';
+import 'package:pc_building_simulator/Screens/SystemListScreen.dart';
 import 'package:pc_building_simulator/Utils/colors.dart';
 import 'package:pc_building_simulator/Utils/common.dart';
 import 'package:pc_building_simulator/Utils/images.dart';
@@ -29,12 +32,12 @@ class _MyHomePageState extends State<DashboardPage> {
     return Scaffold(
       backgroundColor: primaryColor,
       extendBodyBehindAppBar: true,
-   /**   appBar: AppBar(
-        title: Text('PRODIOT'),
+      appBar: AppBar(
+        title: Text(Config.appName, style: CustomStyle.thirdTextStyle,),
+        elevation: 2,
         centerTitle: true,
         backgroundColor: primaryColor,
-        elevation: 10,
-      ),*/
+      ),
       //  bottomNavigationBar: BottomNavBar(),
       body: Stack(
         children: <Widget>[
@@ -159,13 +162,23 @@ class _MyHomePageState extends State<DashboardPage> {
                           CategoryCard(
                             title: 'Hazır Sistem Önerileri',
                             svgSrc: 'assets/images/computer.png',
-                            press: () {  },
+                            press: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SystemListPage()),
+                              );
+                            },
                             color: cardColor,
                           ),
                           CategoryCard(
                             title: 'En iyiler',
                             svgSrc: 'assets/images/bar-chart.png',
-                            press: () {  },
+                            press: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => BestSystemPage()),
+                              );
+                            },
                             color: cardColor,
                           ),
                           CategoryCard(

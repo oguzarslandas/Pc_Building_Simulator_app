@@ -14,26 +14,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class KeyValueModel {
-  String key;
-  String value;
 
-  KeyValueModel({required this.key, required this.value});
-}
-
-class ProductPage extends StatefulWidget {
-  ProductPage({
+class BestSystemPage extends StatefulWidget {
+  BestSystemPage({
     Key? key,
-    required this.result,
+    this.result,
   }) : super(key: key);
 
   final result;
 
   @override
-  State<ProductPage> createState() => _MyHomePageState();
+  State<BestSystemPage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<ProductPage> {
+class _MyHomePageState extends State<BestSystemPage> {
 
   List<Product> productDetailList = [];
 
@@ -44,18 +38,19 @@ class _MyHomePageState extends State<ProductPage> {
     return Scaffold(
         backgroundColor: primaryColor,
         appBar: AppBar(
-          title: Text('Ürünler', style: CustomStyle.thirdTextStyle,),
+          title: Text('En İyiler', style: CustomStyle.thirdTextStyle,),
           elevation: 1,
           leading: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon:Icon(Boxicons.bxs_chevron_left)),
+              icon:Icon(Boxicons.bxs_chevron_left)
+          ),
           centerTitle: true,
           backgroundColor: primaryColor,
         ),
         body: FutureBuilder(
-          future: APIService.getProduct(widget.result),
+          future: APIService.getProduct("3"),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(
@@ -67,23 +62,27 @@ class _MyHomePageState extends State<ProductPage> {
               return ListView.builder(
                   itemCount: pdata.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      leading: const Icon(Boxicons.bxs_chevrons_right, color: cardColor,),
-                      title: Text("${pdata[index].name}", style: CustomStyle.thirdTextStyle,),
-                      subtitle: Text("${pdata[index].desc}", style: CustomStyle.thirdTextStyle,),
-                      trailing: Text("${pdata[index].price}", style: CustomStyle.thirdTextStyle,),
-                      onTap: () {
-
-                          productDetailList.add(Product(
-                              name: pdata[index].name,
-                              desc: pdata[index].desc,
-                              price: pdata[index].price,
-                              benchpoint: pdata[index].benchpoint,
-                              result: pdata[index].result
-                          ));
-                          Navigator.of(context).pop(productDetailList);
-
-                      },
+                    return Container(
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.all(8),
+                      decoration: CustomStyle.secondBoxDecoration,
+                      //    height: MediaQuery.of(context).size.height * 0.15,
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("${pdata[index].name}", style: CustomStyle.priceTextStyle,),
+                              Text("${pdata[index].desc}", style: CustomStyle.thirdTextStyle,),
+                              Text("${pdata[index].price}", style: CustomStyle.thirdTextStyle,),
+                            ],
+                          ),
+                          Icon(Boxicons.bx_bomb, size: 40, color: price,)
+                        ],
+                      ),
                     );
                   });
             }

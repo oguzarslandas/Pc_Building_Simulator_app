@@ -41,6 +41,13 @@ class _MyHomePageState extends State<BenchmarkPage> {
       child: Scaffold(
           backgroundColor: primaryColor,
           appBar: AppBar(
+            title: Text('Benchmark', style: CustomStyle.thirdTextStyle,),
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+                icon:Icon(Boxicons.bxs_chevron_left)),
+            centerTitle: true,
             backgroundColor: primaryColor,
             bottom: TabBar(
               tabs: <Widget>[
@@ -103,7 +110,6 @@ class _MyHomePageState extends State<BenchmarkPage> {
                       );
                     } else {
                       List<Product> pdata = snapshot.data;
-
 
                       return ListView.builder(
                           itemCount: pdata.length,

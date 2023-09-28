@@ -26,7 +26,7 @@ class CustomStyle {
     fontSize: 16,
     color: cardColor,
     fontWeight: FontWeight.normal,
-    fontFamily: 'lato'
+    fontFamily: 'Red Hat Display'
   );
 
   static const TextStyle priceTextStyle = TextStyle(
@@ -118,13 +118,13 @@ InputDecoration inputDecoration(TextStyle textStyle, String text) {
   );
 }
 
-const spinkit = SpinKitPouringHourGlassRefined(
+const spinkit = SpinKitChasingDots(
   color: primaryColor,
   size: 35.0,
 );
 
-const spinkitSecondary = SpinKitPouringHourGlassRefined(
-  color: secondaryPrimaryColor,
+const spinkitSecondary = SpinKitChasingDots(
+  color: cardColor,
   size: 35.0,
 );
 

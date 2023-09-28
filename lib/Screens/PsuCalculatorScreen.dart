@@ -274,12 +274,17 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
     return Scaffold(
       backgroundColor: primaryColor,
       extendBodyBehindAppBar: true,
-      /**   appBar: AppBar(
-          title: Text('PRODIOT'),
-          centerTitle: true,
-          backgroundColor: primaryColor,
-          elevation: 10,
-          ),*/
+      appBar: AppBar(
+        title: Text('Güç Kaynağı Hesapla', style: CustomStyle.thirdTextStyle,),
+        elevation: 0,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon:Icon(Boxicons.bxs_chevron_left)),
+        centerTitle: true,
+        backgroundColor: primaryColor,
+      ),
       //  bottomNavigationBar: BottomNavBar(),
       body: Stack(
         children: <Widget>[
