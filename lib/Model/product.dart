@@ -7,6 +7,8 @@ class Product {
   final String? benchpoint;
   final String? watt;
   final String? result;
+  final String? imgUrl;
+  final String? buyUrl;
 
   Product(
       {this.name,
@@ -16,5 +18,8 @@ class Product {
       this.socket,
       this.benchpoint,
       this.watt,
-      this.result});
+      this.result,
+      this.imgUrl,
+      this.buyUrl,
+      });
 }

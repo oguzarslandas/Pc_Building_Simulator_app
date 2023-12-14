@@ -2,6 +2,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
+import 'package:get/get.dart';
 import 'package:pc_building_simulator/Network/Api/ApiConfig.dart';
 import 'package:pc_building_simulator/Screens/BestSystemScreen.dart';
 import 'package:pc_building_simulator/Screens/PcBuildScreen.dart';
@@ -16,6 +18,7 @@ import 'package:pc_building_simulator/Widgets/DeviceCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:pc_building_simulator/Widgets/DrawerList.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key,}) : super(key: key);
@@ -26,17 +29,22 @@ class DashboardPage extends StatefulWidget {
 
 class _MyHomePageState extends State<DashboardPage> {
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerList(),
+      drawerScrimColor: thirdPrimaryColor.withOpacity(0.50),
+      drawerDragStartBehavior: DragStartBehavior.start,
+      drawerEdgeDragWidth: MediaQuery.of(context).size.width,
       backgroundColor: primaryColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(Config.appName, style: CustomStyle.thirdTextStyle,),
-        elevation: 2,
+        title: const Text('PC CREATOR', style: CustomStyle
+            .primaryTextStyle,),
         centerTitle: true,
         backgroundColor: primaryColor,
+        iconTheme: const IconThemeData(color: thirdPrimaryColor),
+        elevation: 1,
       ),
       //  bottomNavigationBar: BottomNavBar(),
       body: Stack(
@@ -116,19 +124,21 @@ class _MyHomePageState extends State<DashboardPage> {
                     ),
                   ),*/
 
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
                       child: GridView.count(
                         physics: const BouncingScrollPhysics(),
-                        crossAxisCount: 2,
-                        childAspectRatio: 1.00,
+                        crossAxisCount: 1,
+                        childAspectRatio: 3,
                         crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
+                        mainAxisSpacing: 0,
                         children: [
                           CategoryCard(
-                            title: 'Sistem Hazırla',
-                            svgSrc: 'assets/images/case.png',
+                            title: 'pcbuild'.tr,
+                            svgSrc: graphiccard3,
                             press: () {
                               Navigator.push(
                                 context,
@@ -138,8 +148,8 @@ class _MyHomePageState extends State<DashboardPage> {
                             color: cardColor,
                           ),
                           CategoryCard(
-                            title: 'Sistem Benchmark',
-                            svgSrc: 'assets/images/benchmarking.png',
+                            title: 'systembenchmark'.tr,
+                            svgSrc: bench,
                             press: () {
                               Navigator.push(
                                 context,
@@ -149,8 +159,8 @@ class _MyHomePageState extends State<DashboardPage> {
                             color: cardColor,
                           ),
                           CategoryCard(
-                              title: 'Güç Kaynağı Hesapla',
-                              svgSrc: 'assets/images/psu.png',
+                              title: 'psucalculator'.tr,
+                              svgSrc: psu,
                               press: () {
                                 Navigator.push(
                                   context,
@@ -160,8 +170,8 @@ class _MyHomePageState extends State<DashboardPage> {
                               color: cardColor,
                           ),
                           CategoryCard(
-                            title: 'Hazır Sistem Önerileri',
-                            svgSrc: 'assets/images/computer.png',
+                            title: 'readysystems'.tr,
+                            svgSrc: pckasa,
                             press: () {
                               Navigator.push(
                                 context,
@@ -171,20 +181,14 @@ class _MyHomePageState extends State<DashboardPage> {
                             color: cardColor,
                           ),
                           CategoryCard(
-                            title: 'En iyiler',
-                            svgSrc: 'assets/images/bar-chart.png',
+                            title: 'best'.tr,
+                            svgSrc: best,
                             press: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => BestSystemPage()),
                               );
                             },
-                            color: cardColor,
-                          ),
-                          CategoryCard(
-                            title: 'Forum',
-                            svgSrc: 'assets/images/chat.png',
-                            press: () {  },
                             color: cardColor,
                           ),
                         ],

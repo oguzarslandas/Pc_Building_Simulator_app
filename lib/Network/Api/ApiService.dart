@@ -109,10 +109,15 @@ class APIService {
           if(value['presult'] == result) {
             products.add(Product(
                 name: value['pname'],
+                brand: value['pbrand'],
                 desc: value['pdesc'],
                 price: value['pprice'],
+                socket: value['psocket'],
+                watt: value['pwatt'],
                 benchpoint: value['pbenchpoint'],
-                result: value['presult']
+                result: value['presult'],
+                imgUrl: value['pimgurl'],
+                buyUrl: value['pbuyurl'],
             ))
           }
         });

@@ -15,7 +15,7 @@ const helpSupportUrl = 'https://oldubilin.com/#/contact-us/';
 
 //region Configs
 const decimalPoint = 2;
-const defaultLanguage = 'tr';
+const defaultLanguage = 'en';
 const perPageItem = 25;
 const planRemainingDays = 15;
 //endregion

@@ -22,7 +22,8 @@ class _State extends State<Home> {
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
-        CupertinoTabScaffold(
+        DashboardPage()
+   /*     CupertinoTabScaffold(
           backgroundColor: primaryColor,
           controller: controller,
           tabBar: CupertinoTabBar(
@@ -51,7 +52,7 @@ class _State extends State<Home> {
               : (index == 1)
               ? DashboardPage()
               : DashboardPage()
-        ),
+        ),*/
    //     overlayVisible ? OverlayWidget() : Container(),
       ],
     );

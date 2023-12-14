@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_boxicons/flutter_boxicons.dart';
+import 'package:get/get.dart';
 import 'package:pc_building_simulator/Model/product.dart';
 import 'package:pc_building_simulator/Network/Api/ApiService.dart';
 import 'package:pc_building_simulator/Utils/Globals.dart';
@@ -38,13 +39,13 @@ class _MyHomePageState extends State<BestSystemPage> {
     return Scaffold(
         backgroundColor: primaryColor,
         appBar: AppBar(
-          title: Text('En İyiler', style: CustomStyle.thirdTextStyle,),
+          title: Text('best'.tr, style: CustomStyle.thirdTextStyle,),
           elevation: 1,
           leading: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon:Icon(Boxicons.bxs_chevron_left)
+              icon:Icon(Boxicons.bxs_chevron_left, color: thirdPrimaryColor,)
           ),
           centerTitle: true,
           backgroundColor: primaryColor,

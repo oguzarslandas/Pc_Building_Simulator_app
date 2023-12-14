@@ -21,9 +21,15 @@ dependencies:
   fluttertoast: ^8.1.2
   material_dialogs: ^1.1.4
   nb_utils: ^4.6.25
+  mobx: ^2.0.6+1
+  easy_localization: ^3.0.3
+  get: ^4.6.6
+  country_flags: ^2.1.0
+  animated_text_kit: ^4.2.2
   syncfusion_flutter_charts: ^20.4.44
   google_maps_flutter: ^2.2.3
   flutter_boxicons: ^3.0.0
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:

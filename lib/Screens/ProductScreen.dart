@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_boxicons/flutter_boxicons.dart';
+import 'package:get/get.dart';
 import 'package:pc_building_simulator/Model/product.dart';
 import 'package:pc_building_simulator/Network/Api/ApiService.dart';
 import 'package:pc_building_simulator/Utils/Globals.dart';
@@ -13,6 +14,7 @@ import 'package:pc_building_simulator/Widgets/DeviceCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class KeyValueModel {
   String key;
@@ -44,13 +46,13 @@ class _MyHomePageState extends State<ProductPage> {
     return Scaffold(
         backgroundColor: primaryColor,
         appBar: AppBar(
-          title: Text('Ürünler', style: CustomStyle.thirdTextStyle,),
+          title: Text('products'.tr, style: CustomStyle.primaryTextStyle,),
           elevation: 1,
           leading: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon:Icon(Boxicons.bxs_chevron_left)),
+              icon:Icon(Boxicons.bxs_chevron_left, color: secondaryPrimaryColor,)),
           centerTitle: true,
           backgroundColor: primaryColor,
         ),
@@ -67,23 +69,67 @@ class _MyHomePageState extends State<ProductPage> {
               return ListView.builder(
                   itemCount: pdata.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      leading: const Icon(Boxicons.bxs_chevrons_right, color: cardColor,),
-                      title: Text("${pdata[index].name}", style: CustomStyle.thirdTextStyle,),
-                      subtitle: Text("${pdata[index].desc}", style: CustomStyle.thirdTextStyle,),
-                      trailing: Text("${pdata[index].price}", style: CustomStyle.thirdTextStyle,),
-                      onTap: () {
+                    return Card(
+                      child: ListTile(
+                        leading: Container(
+                          height: size.height * 0.10,
+                            width: size.width * 0.15,
+                            child: pdata[index].imgUrl != null ? Image.asset("${pdata[index].imgUrl}" )
+                        : Image.asset(noimage)
+                        ),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                  child: Text("${pdata[index].name}", style: CustomStyle.headlineTextStyle,)),
+                            ),
+                            Text("${pdata[index].price}" + 'currency'.tr, style: CustomStyle.priceTextStyle,),
+                          ],
+                        ),
+                        subtitle: Column(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                        //        decoration: CustomStyle.secondBoxDecoration,
+                                child: Text("${pdata[index].desc}", style: CustomStyle.titleTextStyle,)
+                            ),
+                       //     SizedBox(height: 5,),
+                         /**   ElevatedButton(
+                              onPressed: () => setState(() {
+                                final Uri toLaunch = Uri.parse(pdata[index].buyUrl.toString());
+                                _launchInBrowser(toLaunch);
+                              }),
+                                child: Text('buy'.tr, style: CustomStyle.primaryTextStyle,),
+                              style: CustomStyle.buyButtonStyle,
+                            ),*/
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                height: size.height * .05,
+                                child: Image.asset(buyonamazon),
+                              ),
+                            )
+                          ],
+                        ),
+                   //     trailing: Text("${pdata[index].price}", style: CustomStyle.priceTextStyle,),
+                        onTap: () {
 
-                          productDetailList.add(Product(
-                              name: pdata[index].name,
-                              desc: pdata[index].desc,
-                              price: pdata[index].price,
-                              benchpoint: pdata[index].benchpoint,
-                              result: pdata[index].result
-                          ));
-                          Navigator.of(context).pop(productDetailList);
+                            productDetailList.add(Product(
+                                name: pdata[index].name,
+                                brand: pdata[index].brand,
+                                desc: pdata[index].desc,
+                                price: pdata[index].price,
+                                benchpoint: pdata[index].benchpoint,
+                                watt: pdata[index].watt,
+                                socket: pdata[index].socket,
+                                result: pdata[index].result
+                            ));
+                            Navigator.of(context).pop(productDetailList);
 
-                      },
+                        },
+                      ),
                     );
                   });
             }
@@ -91,4 +137,15 @@ class _MyHomePageState extends State<ProductPage> {
         )
     );
   }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.inAppWebView,
+    )) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
 }
+

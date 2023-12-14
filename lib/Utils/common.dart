@@ -10,8 +10,36 @@ import '../Utils/colors.dart';
 class CustomStyle {
   static const TextStyle primaryTextStyle = TextStyle(
     fontSize: 16,
-    color: textColor,
+    color: thirdPrimaryColor,
     fontWeight: FontWeight.normal,
+      fontFamily: 'Red Hat Display'
+  );
+
+  static const TextStyle headlineTextStyle = TextStyle(
+      fontSize: 16,
+      color: thirdPrimaryColor,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Red Hat Display'
+  );
+
+  static const TextStyle titleTextStyle = TextStyle(
+      fontSize: 12,
+      color: thirdPrimaryColor,
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Red Hat Display'
+  );
+
+  static const TextStyle boldTitleTextStyle = TextStyle(
+      fontSize: 18,
+      color: thirdPrimaryColor,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Red Hat Display'
+  );
+
+  static const TextStyle normalTitleTextStyle = TextStyle(
+      fontSize: 18,
+      color: thirdPrimaryColor,
+      fontWeight: FontWeight.normal,
       fontFamily: 'Red Hat Display'
   );
 
@@ -23,10 +51,31 @@ class CustomStyle {
   );
 
   static const TextStyle thirdTextStyle = TextStyle(
-    fontSize: 16,
-    color: cardColor,
+    fontSize: 14,
+    color: thirdPrimaryColor,
     fontWeight: FontWeight.normal,
     fontFamily: 'Red Hat Display'
+  );
+
+  static const TextStyle pcbuildTextStyle = TextStyle(
+      fontSize: 16,
+      color: primaryColor,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Red Hat Display'
+  );
+
+  static const TextStyle dashboardTextStyle = TextStyle(
+      fontSize: 18,
+      color: thirdPrimaryColor,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Red Hat Display'
+  );
+
+  static const TextStyle locationTextStyle = TextStyle(
+      fontSize: 46,
+      color: thirdPrimaryColor,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Red Hat Display'
   );
 
   static const TextStyle priceTextStyle = TextStyle(
@@ -41,8 +90,7 @@ class CustomStyle {
       fontSize: 28,
       color: hold,
       fontStyle: FontStyle.italic,
-      fontWeight: FontWeight.w600,
-      fontFamily: 'Red Hat Display'
+      fontWeight: FontWeight.w600
   );
 
   static BoxDecoration primaryBoxDecoration = BoxDecoration(
@@ -51,14 +99,14 @@ class CustomStyle {
   );
 
   static BoxDecoration secondBoxDecoration = BoxDecoration(
-      color: secondaryPrimaryColor,
+      color: primaryColor,
       border: Border.all(color: secondaryPrimaryColor),
       borderRadius: BorderRadius.circular(15)
   );
 
   static BoxDecoration correctBoxDecoration = BoxDecoration(
       color: completed,
-      border: Border.all(color: secondaryPrimaryColor),
+      border: Border.all(color: completed),
       borderRadius: BorderRadius.circular(15)
   );
 
@@ -76,8 +124,12 @@ class CustomStyle {
   );
 
   static ButtonStyle primaryButtonStyle = ElevatedButton.styleFrom(
-    backgroundColor: secondaryPrimaryColor,
+    backgroundColor: primaryColor,
     padding: const EdgeInsets.symmetric(vertical: 18),
+    side: BorderSide(
+      width: 1,
+      color: secondaryPrimaryColor
+    ),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15), // <-- Radius
     ),
@@ -90,6 +142,20 @@ class CustomStyle {
       borderRadius: BorderRadius.circular(15), // <-- Radius
     ),
   );
+
+  static ButtonStyle buyButtonStyle = ElevatedButton.styleFrom(
+    backgroundColor: primaryColor,
+    minimumSize: Size.fromHeight(20),
+    padding: const EdgeInsets.symmetric(vertical: 13),
+    side: BorderSide(
+        width: 1,
+        color: secondaryPrimaryColor
+    ),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15), // <-- Radius
+    ),
+  );
+
 }
 
 InputDecoration inputDecoration(TextStyle textStyle, String text) {
@@ -119,12 +185,18 @@ InputDecoration inputDecoration(TextStyle textStyle, String text) {
 }
 
 const spinkit = SpinKitChasingDots(
-  color: primaryColor,
+  color: secondaryPrimaryColor,
   size: 35.0,
 );
 
 const spinkitSecondary = SpinKitChasingDots(
   color: cardColor,
+  size: 35.0,
+);
+
+
+const spinkitLoading = SpinKitPianoWave(
+  color: secondaryPrimaryColor,
   size: 35.0,
 );
 

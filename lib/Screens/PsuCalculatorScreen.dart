@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_boxicons/flutter_boxicons.dart';
+import 'package:get/get.dart';
 import 'package:pc_building_simulator/Model/product.dart';
 import 'package:pc_building_simulator/Model/socket.dart';
 import 'package:pc_building_simulator/Network/Api/ApiConfig.dart';
@@ -275,13 +276,13 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
       backgroundColor: primaryColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('Güç Kaynağı Hesapla', style: CustomStyle.thirdTextStyle,),
+        title: Text('psucalculator'.tr, style: CustomStyle.primaryTextStyle,),
         elevation: 0,
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon:Icon(Boxicons.bxs_chevron_left)),
+            icon:Icon(Boxicons.bxs_chevron_left, color: secondaryPrimaryColor,)),
         centerTitle: true,
         backgroundColor: primaryColor,
       ),
@@ -316,15 +317,12 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Bileşenleri Seçin',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
+                      'selectparts'.tr,
+                      style: CustomStyle.boldTitleTextStyle
                     ),
                   ),
                   Divider(
-                    color: Colors.grey,
+                    color: secondaryPrimaryColor,
                     thickness: 0,
                   ),
                   Expanded(
@@ -343,8 +341,11 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                       Container(
                                           height: MediaQuery.of(context).size.height * 0.025,
                                           child: Image.asset(processor)),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
                                       Text(
-                                        '  İşlemci',
+                                        'cpu'.tr,
                                         style: CustomStyle.priceTextStyle
                                       ),
                                       Spacer()
@@ -364,9 +365,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                             value: processBrand,
                                             dropdownColor: primaryColor,
                                             icon: const Icon(Icons.keyboard_arrow_down,
-                                                color: Colors.white),
+                                                color: secondaryPrimaryColor),
                                             elevation: 16,
-                                            style: TextStyle(color: Colors.white),
+                                            style: CustomStyle.thirdTextStyle,
                                             underline: Container(
                                               height: 0,
                                               color: primaryColor,
@@ -379,7 +380,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                 processBrand = newValue;
                                               });
                                             },
-                                            hint: Text('Marka', style: CustomStyle.thirdTextStyle,),
+                                            hint: Text('brand'.tr, style: CustomStyle.thirdTextStyle,),
                                             items: processers
                                                 .map((data) => DropdownMenuItem<String>(
                                               child: Text(data.key),
@@ -394,7 +395,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                           builder: (BuildContext context, AsyncSnapshot snapshot) {
                                             if (!snapshot.hasData) {
                                               return const Center(
-                                                child: CircularProgressIndicator(),
+                                                child: spinkitLoading,
                                               );
                                             } else {
                                               List<Socket> pdata = snapshot.data;
@@ -407,9 +408,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                   value: processSocket,
                                                   dropdownColor: primaryColor,
                                                   icon: const Icon(Icons.keyboard_arrow_down,
-                                                      color: Colors.white),
+                                                      color: secondaryPrimaryColor),
                                                   elevation: 16,
-                                                  style: TextStyle(color: Colors.white),
+                                                  style: CustomStyle.thirdTextStyle,
                                                   underline: Container(
                                                     height: 0,
                                                     color: primaryColor,
@@ -421,7 +422,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                       processSocket = newValue;
                                                     });
                                                   },
-                                                  hint: Text('Soket', style: CustomStyle.thirdTextStyle,),
+                                                  hint: Text('socket'.tr, style: CustomStyle.thirdTextStyle,),
                                                   items: pdata
                                                       .map((data) => DropdownMenuItem<String>(
                                                     child: Text(data.name.toString()),
@@ -439,7 +440,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                           builder: (BuildContext context, AsyncSnapshot snapshot) {
                                             if (!snapshot.hasData) {
                                               return const Center(
-                                                child: CircularProgressIndicator(),
+                                                child: spinkitLoading,
                                               );
                                             } else {
                                               List<Product> pdata = snapshot.data;
@@ -452,9 +453,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                   value: processModel,
                                                   dropdownColor: primaryColor,
                                                   icon: const Icon(Icons.keyboard_arrow_down,
-                                                      color: Colors.white),
+                                                      color: secondaryPrimaryColor),
                                                   elevation: 16,
-                                                  style: TextStyle(color: Colors.white),
+                                                  style: CustomStyle.thirdTextStyle,
                                                   underline: Container(
                                                     height: 0,
                                                     color: primaryColor,
@@ -479,7 +480,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
 
                                                     });
                                                   },
-                                                  hint: Text('Model', style: CustomStyle.thirdTextStyle,),
+                                                  hint: Text('model'.tr, style: CustomStyle.thirdTextStyle,),
                                                   items: pdata
                                                       .map((data) => DropdownMenuItem<String>(
                                                     child: Text(data.name.toString()),
@@ -498,7 +499,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                               ),
                             ),
                             decoration: BoxDecoration(
-                              border: Border.all(width: 0, color: Colors.grey),
+                              border: Border.all(width: 1, color: secondaryPrimaryColor),
                               borderRadius: BorderRadius.circular(15)
                             ),
                           ),
@@ -516,8 +517,11 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                       Container(
                                           height: MediaQuery.of(context).size.height * 0.025,
                                           child: Image.asset(graphiccard2)),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
                                       Text(
-                                          '  Ekran Kartı',
+                                          'gpu'.tr,
                                           style: CustomStyle.priceTextStyle
                                       ),
                                       Spacer()
@@ -535,9 +539,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                             value: gpuBrand,
                                             dropdownColor: primaryColor,
                                             icon: const Icon(Icons.keyboard_arrow_down,
-                                                color: Colors.white),
+                                                color: secondaryPrimaryColor),
                                             elevation: 16,
-                                            style: TextStyle(color: Colors.white),
+                                            style: CustomStyle.thirdTextStyle,
                                             underline: Container(
                                               height: 0,
                                               color: primaryColor,
@@ -550,7 +554,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                 gpuBrand = newValue;
                                               });
                                             },
-                                            hint: Text('Marka', style: CustomStyle.thirdTextStyle,),
+                                            hint: Text('brand'.tr, style: CustomStyle.thirdTextStyle,),
                                             items: gpuBrandList
                                                 .map((data) => DropdownMenuItem<String>(
                                               child: Text(data.key),
@@ -565,7 +569,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                           builder: (BuildContext context, AsyncSnapshot snapshot) {
                                             if (!snapshot.hasData) {
                                               return const Center(
-                                                child: CircularProgressIndicator(),
+                                                child: spinkitLoading,
                                               );
                                             } else {
                                               List<Product> pdata = snapshot.data;
@@ -578,9 +582,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                   value: gpuModel,
                                                   dropdownColor: primaryColor,
                                                   icon: const Icon(Icons.keyboard_arrow_down,
-                                                      color: Colors.white),
+                                                      color: secondaryPrimaryColor),
                                                   elevation: 16,
-                                                  style: TextStyle(color: Colors.white),
+                                                  style: CustomStyle.thirdTextStyle,
                                                   underline: Container(
                                                     height: 0,
                                                     color: primaryColor,
@@ -600,7 +604,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
 
                                                     });
                                                   },
-                                                  hint: Text('Ekran Kartı', style: CustomStyle.thirdTextStyle,),
+                                                  hint: Text('gpu'.tr, style: CustomStyle.thirdTextStyle,),
                                                   items: pdata
                                                       .map((data) => DropdownMenuItem<String>(
                                                     child: Text(data.name.toString()),
@@ -621,9 +625,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                             value: gpuCount,
                                             dropdownColor: primaryColor,
                                             icon: const Icon(Icons.keyboard_arrow_down,
-                                                color: Colors.white),
+                                                color: secondaryPrimaryColor),
                                             elevation: 16,
-                                            style: TextStyle(color: Colors.white),
+                                            style: CustomStyle.thirdTextStyle,
                                             underline: Container(
                                               height: 0,
                                               color: primaryColor,
@@ -639,7 +643,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                 print(recommedPSU);
                                               });
                                             },
-                                            hint: Text('Sayı', style: CustomStyle.thirdTextStyle,),
+                                            hint: Text('count'.tr, style: CustomStyle.thirdTextStyle,),
                                             items: gpuCountList
                                                 .map((data) => DropdownMenuItem<String>(
                                               child: Text(data.key),
@@ -655,7 +659,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                               ),
                             ),
                             decoration: BoxDecoration(
-                                border: Border.all(width: 0, color: Colors.grey),
+                                border: Border.all(width: 1, color: secondaryPrimaryColor),
                                 borderRadius: BorderRadius.circular(15)
                             ),
                           ),
@@ -673,8 +677,11 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                       Container(
                                           height: MediaQuery.of(context).size.height * 0.025,
                                           child: Image.asset(motherboard)),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
                                       Text(
-                                          '  Anakart',
+                                          'motherboard'.tr,
                                           style: CustomStyle.priceTextStyle
                                       ),
                                       Spacer()
@@ -692,9 +699,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                             value: maincard,
                                             dropdownColor: primaryColor,
                                             icon: const Icon(Icons.keyboard_arrow_down,
-                                                color: Colors.white),
+                                                color: secondaryPrimaryColor),
                                             elevation: 16,
-                                            style: TextStyle(color: Colors.white),
+                                            style: CustomStyle.primaryTextStyle,
                                             underline: Container(
                                               height: 0,
                                               color: primaryColor,
@@ -710,7 +717,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
 
                                               });
                                             },
-                                            hint: Text('Anakart Tipi', style: CustomStyle.thirdTextStyle,),
+                                            hint: Text('motherboardtype'.tr, style: CustomStyle.thirdTextStyle,),
                                             items: maincardList
                                                 .map((data) => DropdownMenuItem<String>(
                                               child: Text(data.key),
@@ -726,7 +733,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                               ),
                             ),
                             decoration: BoxDecoration(
-                                border: Border.all(width: 0, color: Colors.grey),
+                                border: Border.all(width: 1, color: secondaryPrimaryColor),
                                 borderRadius: BorderRadius.circular(15)
                             ),
                           ),
@@ -744,8 +751,11 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                       Container(
                                           height: MediaQuery.of(context).size.height * 0.025,
                                           child: Image.asset(ram)),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
                                       Text(
-                                          '  RAM',
+                                          'ram'.tr,
                                           style: CustomStyle.priceTextStyle
                                       ),
                                       Spacer()
@@ -763,9 +773,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                             value: ramSocket,
                                             dropdownColor: primaryColor,
                                             icon: const Icon(Icons.keyboard_arrow_down,
-                                                color: Colors.white),
+                                                color: secondaryPrimaryColor),
                                             elevation: 16,
-                                            style: TextStyle(color: Colors.white),
+                                            style: CustomStyle.primaryTextStyle,
                                             underline: Container(
                                               height: 0,
                                               color: primaryColor,
@@ -776,7 +786,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                 ramSocket = newValue;
                                               });
                                             },
-                                            hint: Text('Bellek Modülü', style: CustomStyle.thirdTextStyle,),
+                                            hint: Text('memorymodule'.tr, style: CustomStyle.thirdTextStyle,),
                                             items: ramSocketList
                                                 .map((data) => DropdownMenuItem<String>(
                                               child: Text(data.key),
@@ -794,9 +804,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                             value: ramCount,
                                             dropdownColor: primaryColor,
                                             icon: const Icon(Icons.keyboard_arrow_down,
-                                                color: Colors.white),
+                                                color: secondaryPrimaryColor),
                                             elevation: 16,
-                                            style: TextStyle(color: Colors.white),
+                                            style: CustomStyle.primaryTextStyle,
                                             underline: Container(
                                               height: 0,
                                               color: primaryColor,
@@ -831,7 +841,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
 
                                               });
                                             },
-                                            hint: Text('Sayı', style: CustomStyle.thirdTextStyle,),
+                                            hint: Text('count'.tr, style: CustomStyle.thirdTextStyle,),
                                             items: ramCountList
                                                 .map((data) => DropdownMenuItem<String>(
                                               child: Text(data.key),
@@ -847,7 +857,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                               ),
                             ),
                             decoration: BoxDecoration(
-                                border: Border.all(width: 0, color: Colors.grey),
+                                border: Border.all(width: 1, color: secondaryPrimaryColor),
                                 borderRadius: BorderRadius.circular(15)
                             ),
                           ),
@@ -865,8 +875,11 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                       Container(
                                           height: MediaQuery.of(context).size.height * 0.025,
                                           child: Image.asset(storage)),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
                                       Text(
-                                          '  Depolama',
+                                          'storage'.tr,
                                           style: CustomStyle.priceTextStyle
                                       ),
                                       Spacer()
@@ -884,9 +897,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                             value: storageSocket,
                                             dropdownColor: primaryColor,
                                             icon: const Icon(Icons.keyboard_arrow_down,
-                                                color: Colors.white),
+                                                color: secondaryPrimaryColor),
                                             elevation: 16,
-                                            style: TextStyle(color: Colors.white),
+                                            style: CustomStyle.primaryTextStyle,
                                             underline: Container(
                                               height: 0,
                                               color: primaryColor,
@@ -897,7 +910,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                 storageSocket = newValue;
                                               });
                                             },
-                                            hint: Text('Tür', style: CustomStyle.thirdTextStyle,),
+                                            hint: Text('type'.tr, style: CustomStyle.thirdTextStyle,),
                                             items: storageSocketList
                                                 .map((data) => DropdownMenuItem<String>(
                                               child: Text(data.key),
@@ -915,9 +928,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                             value: storageCount,
                                             dropdownColor: primaryColor,
                                             icon: const Icon(Icons.keyboard_arrow_down,
-                                                color: Colors.white),
+                                                color: secondaryPrimaryColor),
                                             elevation: 16,
-                                            style: TextStyle(color: Colors.white),
+                                            style: CustomStyle.primaryTextStyle,
                                             underline: Container(
                                               height: 0,
                                               color: primaryColor,
@@ -941,7 +954,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
 
                                               });
                                             },
-                                            hint: Text('Sayı', style: CustomStyle.thirdTextStyle,),
+                                            hint: Text('count'.tr, style: CustomStyle.thirdTextStyle,),
                                             items: storageCountList
                                                 .map((data) => DropdownMenuItem<String>(
                                               child: Text(data.key),
@@ -957,7 +970,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                               ),
                             ),
                             decoration: BoxDecoration(
-                                border: Border.all(width: 0, color: Colors.grey),
+                                border: Border.all(width: 1, color: secondaryPrimaryColor),
                                 borderRadius: BorderRadius.circular(15)
                             ),
                           ),
@@ -975,8 +988,11 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                       Container(
                                           height: MediaQuery.of(context).size.height * 0.025,
                                           child: Image.asset(application)),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
                                       Text(
-                                          '  Diğer',
+                                          'other'.tr,
                                           style: CustomStyle.priceTextStyle
                                       ),
                                       Spacer()
@@ -994,9 +1010,9 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                             value: fanCount,
                                             dropdownColor: primaryColor,
                                             icon: const Icon(Icons.keyboard_arrow_down,
-                                                color: Colors.white),
+                                                color: secondaryPrimaryColor),
                                             elevation: 16,
-                                            style: TextStyle(color: Colors.white),
+                                            style: CustomStyle.primaryTextStyle,
                                             underline: Container(
                                               height: 0,
                                               color: primaryColor,
@@ -1019,7 +1035,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
 
                                               });
                                             },
-                                            hint: Text('Fan Sayısı', style: CustomStyle.thirdTextStyle,),
+                                            hint: Text('fancount'.tr, style: CustomStyle.thirdTextStyle,),
                                             items: fanCountList
                                                 .map((data) => DropdownMenuItem<String>(
                                               child: Text(data.key),
@@ -1035,7 +1051,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                               ),
                             ),
                             decoration: BoxDecoration(
-                                border: Border.all(width: 0, color: Colors.grey),
+                                border: Border.all(width: 1, color: secondaryPrimaryColor),
                                 borderRadius: BorderRadius.circular(15)
                             ),
                           ),
@@ -1046,7 +1062,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                     ),
                   ),
                   Divider(
-                    color: Colors.grey,
+                    color: secondaryPrimaryColor,
                     thickness: 0,
                   ),
                   Container(
@@ -1058,7 +1074,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Tavsiye Edilen Güç Kaynağı',
+                          'recommedpsu'.tr,
                           style: CustomStyle.primaryTextStyle,
                         ),
                         Text(
@@ -1069,7 +1085,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                     ),
                   ),
                   Divider(
-                    color: Colors.grey,
+                    color: secondaryPrimaryColor,
                     thickness: 0,
                   ),
                 ],

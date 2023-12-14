@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:pc_building_simulator/Screens/Dashboard.dart';
 import 'package:pc_building_simulator/Screens/LocationScren.dart';
 import 'package:pc_building_simulator/Screens/LoginScren.dart';
@@ -23,18 +22,6 @@ class _SplashPageState extends State<SplashPage> {
   late SharedPreferences localdata;
   bool? islogin;
 
-  static const colorizeColors = [
-    Colors.black,
-    Colors.white,
-    Colors.black,
-  ];
-
-  static const colorizeTextStyle = TextStyle(
-    fontSize: 40.0,
-    fontWeight: FontWeight.w600,
-    fontFamily: 'Red Hat Display',
-  );
-
   void init() async {
     localdata = await SharedPreferences.getInstance();
     islogin = (localdata.getBool('login') ?? false);
@@ -51,7 +38,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 6), () => init());
+    Timer(const Duration(seconds: 5), () => init());
   }
 
 
@@ -65,7 +52,7 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
         body: Stack(
           children: <Widget>[
-        /*    Container(
+            Container(
               //     color: colors.secondcolor,
               decoration: BoxDecoration(
                   image: DecorationImage(
@@ -76,7 +63,7 @@ class _SplashPageState extends State<SplashPage> {
                       fit: BoxFit.fitHeight
                   )
               ),
-            ),*/
+            ),
             Center(
               child: Column(
                 children: <Widget>[
@@ -86,7 +73,7 @@ class _SplashPageState extends State<SplashPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                     /*   CircleAvatar(
+                        CircleAvatar(
                           backgroundColor: secondaryPrimaryColor.withOpacity
                             (0.45),
                           radius: 65.0,
@@ -94,25 +81,20 @@ class _SplashPageState extends State<SplashPage> {
                             appLogo,
                             height: MediaQuery.of(context).size.height * 0.10,
                           ),
-                        ),*/
-                      AnimatedTextKit(
-                        animatedTexts: [
-                          ColorizeAnimatedText(
-                            'PC CREATOR',
-                            textStyle: colorizeTextStyle,
-                            colors: colorizeColors,
-                            speed: const Duration(milliseconds: 500),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text(
+                              mAppName,
+                              style: CustomStyle.headlineTextStyle
                           ),
-                        ],
-                        isRepeatingAnimation: true,
-                        repeatForever: false,
-
-                        onTap: () {
-                          print("Tap Event");
-                        },
-                      ),
+                        ),
                       ],
                     ),
+                  ),
+                  spinkit,
+                  const SizedBox(
+                    height: 50,
                   ),
                 ],
               ),

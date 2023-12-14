@@ -1,6 +1,7 @@
 class Config {
   static const String appName = "PC Creator";
-  static const String apiURL = "http://192.168.0.103/api/";
+  static const String apiURL = "http://192.168.0.100/api/";
+//  static const String apiURL = "http://oguzarslandas.tr.ht/api/";
   static const String loginAPI = "/api/loginmember";
   static const String authenticate = "/api/Authenticate";
   static const String prodiot = "/prodiot.json";
