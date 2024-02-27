@@ -58,7 +58,7 @@ class _State extends State<LocationPage> {
                     SizedBox(
                       width: 5,
                     ),
-                    Text('United Kingdom', style: CustomStyle.primaryTextStyle,),
+                    Text('UK', style: CustomStyle.primaryTextStyle,),
                   ],
                 ),
                 style: OutlinedButton.styleFrom(

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:get/get.dart';
 import 'package:pc_building_simulator/Model/product.dart';
@@ -56,85 +57,98 @@ class _MyHomePageState extends State<ProductPage> {
           centerTitle: true,
           backgroundColor: primaryColor,
         ),
-        body: FutureBuilder(
-          future: APIService.getProduct(widget.result),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (!snapshot.hasData) {
+
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('products').snapshots(),
+          builder: (context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else {
-              List<Product> pdata = snapshot.data;
-
-              return ListView.builder(
-                  itemCount: pdata.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
+            }
+            return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (BuildContext context, int index) {
+                    return widget.result == snapshot.data!.docs[index]['result'] ?
+                    Card(
                       child: ListTile(
                         leading: Container(
-                          height: size.height * 0.10,
+                            height: size.height * 0.10,
                             width: size.width * 0.15,
-                            child: pdata[index].imgUrl != null ? Image.asset("${pdata[index].imgUrl}" )
-                        : Image.asset(noimage)
+                            child: snapshot.data!.docs[index]['imgUrl'] != null ?  SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.35,
+                              width: double.infinity,
+                              child: Image.network(
+                                snapshot.data!.docs[index]['imgUrl'].toString(),
+                                fit: BoxFit.cover,
+                              ),
+                            ) : Image.asset(noimage)
                         ),
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
                               child: Container(
-                                  child: Text("${pdata[index].name}", style: CustomStyle.headlineTextStyle,)),
+                                  child: Text("${snapshot.data!.docs[index]['name']}", style: CustomStyle.headlineTextStyle,)),
                             ),
-                            Text("${pdata[index].price}" + 'currency'.tr, style: CustomStyle.priceTextStyle,),
+                            Text("${snapshot.data!.docs[index]['price']}" + 'currency'.tr, style: CustomStyle.priceTextStyle,),
                           ],
                         ),
                         subtitle: Column(
                           children: [
                             Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-                        //        decoration: CustomStyle.secondBoxDecoration,
-                                child: Text("${pdata[index].desc}", style: CustomStyle.titleTextStyle,)
+                                width: double.infinity,
+                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                                //        decoration: CustomStyle.secondBoxDecoration,
+                                child: Text("${snapshot.data!.docs[index]['desc']}", style: CustomStyle.titleTextStyle,)
                             ),
-                       //     SizedBox(height: 5,),
-                         /**   ElevatedButton(
-                              onPressed: () => setState(() {
-                                final Uri toLaunch = Uri.parse(pdata[index].buyUrl.toString());
-                                _launchInBrowser(toLaunch);
-                              }),
-                                child: Text('buy'.tr, style: CustomStyle.primaryTextStyle,),
-                              style: CustomStyle.buyButtonStyle,
-                            ),*/
+                            //     SizedBox(height: 5,),
                             Align(
                               alignment: Alignment.centerRight,
                               child: Container(
                                 height: size.height * .05,
-                                child: Image.asset(buyonamazon),
+                                child: InkWell(
+                                    onTap: () {
+                                      final Uri toLaunch = Uri.parse(snapshot.data!.docs[index]['buyUrl'].toString());
+                                      _launchInBrowser(toLaunch);
+                                    },
+                                    child: Image.asset(buyonamazon)),
                               ),
                             )
                           ],
                         ),
-                   //     trailing: Text("${pdata[index].price}", style: CustomStyle.priceTextStyle,),
+                        //     trailing: Text("${pdata[index].price}", style: CustomStyle.priceTextStyle,),
                         onTap: () {
 
-                            productDetailList.add(Product(
-                                name: pdata[index].name,
-                                brand: pdata[index].brand,
-                                desc: pdata[index].desc,
-                                price: pdata[index].price,
-                                benchpoint: pdata[index].benchpoint,
-                                watt: pdata[index].watt,
-                                socket: pdata[index].socket,
-                                result: pdata[index].result
-                            ));
-                            Navigator.of(context).pop(productDetailList);
+                          productDetailList.add(Product(
+                            name: snapshot.data!.docs[index]['name'],
+                            brand: snapshot.data!.docs[index]['brand'],
+                            desc: snapshot.data!.docs[index]['desc'],
+                            price: snapshot.data!.docs[index]['price'],
+                            benchpoint: snapshot.data!.docs[index]['benchpoint'],
+                            watt: snapshot.data!.docs[index]['watt'],
+                            socket: snapshot.data!.docs[index]['socket'],
+                            result: snapshot.data!.docs[index]['result'],
+                            uid:  snapshot.data!.docs[index]['uid'],
+                            imgUrl: snapshot.data!.docs[index]['imgUrl'],
+                            buyUrl: snapshot.data!.docs[index]['buyUrl'],
+                            classcpu: snapshot.data!.docs[index]['classcpu'],
+                            clockspeed: snapshot.data!.docs[index]['clockspeed'],
+                            core: snapshot.data!.docs[index]['core'],
+                            thread: snapshot.data!.docs[index]['thread'],
+                            turbospeed: snapshot.data!.docs[index]['turbospeed'],
+                            cache: snapshot.data!.docs[index]['cache'],
+                          ));
+                          Navigator.of(context).pop(productDetailList);
 
                         },
                       ),
-                    );
-                  });
-            }
+                    ) : SizedBox.shrink();
+
+                });
           },
-        )
+        ),
     );
   }
 

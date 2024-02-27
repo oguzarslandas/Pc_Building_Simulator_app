@@ -117,7 +117,7 @@ class APIService {
                 benchpoint: value['pbenchpoint'],
                 result: value['presult'],
                 imgUrl: value['pimgurl'],
-                buyUrl: value['pbuyurl'],
+                buyUrl: value['pbuyurl'], uid: '', classcpu: '', clockspeed: '', turbospeed: '', core: '', thread: '', cache: '',
             ))
           }
         });

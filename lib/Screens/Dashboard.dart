@@ -20,6 +20,8 @@ import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:pc_building_simulator/Widgets/DrawerList.dart';
 
+import 'AddProductScreen.dart';
+
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key,}) : super(key: key);
 
@@ -136,6 +138,17 @@ class _MyHomePageState extends State<DashboardPage> {
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 0,
                         children: [
+                          CategoryCard(
+                            title: 'Ekle',
+                            svgSrc: graphiccard3,
+                            press: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const AddProductPage()),
+                              );
+                            },
+                            color: cardColor,
+                          ),
                           CategoryCard(
                             title: 'pcbuild'.tr,
                             svgSrc: graphiccard3,

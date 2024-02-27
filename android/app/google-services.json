@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "829059623527",
+    "project_id": "pccreator-e4985",
+    "storage_bucket": "pccreator-e4985.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:829059623527:android:24edebc159895968c842c2",
+        "android_client_info": {
+          "package_name": "com.codefit.pc_building_simulator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY5BZ-9dKrv_3NlZWuWbv1wIqHvqgE_-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

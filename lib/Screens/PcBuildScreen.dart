@@ -119,34 +119,6 @@ class _MyHomePageState extends State<PcBuildPage> {
                             margin: EdgeInsets.symmetric(vertical: 0),
                             child: Column(
                               children: [
-                         /**       Container(
-                              padding: EdgeInsets.symmetric(horizontal: 8),
-                              decoration: CustomStyle.secondBoxDecoration,
-                              child: DropdownButton<String>(
-                              isExpanded: true,
-                                value: maincard,
-                                dropdownColor: primaryColor,
-                                icon: const Icon(Icons.keyboard_arrow_down,
-                                    color: Colors.white),
-                                elevation: 16,
-                                style: TextStyle(color: Colors.white),
-                                underline: Container(
-                                  height: 0,
-                                  color: primaryColor,
-                                ),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    maincard = newValue;
-                                  });
-                                },
-                                items: teams
-                                    .map((data) => DropdownMenuItem<String>(
-                                  child: Text(data.key),
-                                  value: data.value,
-                                ))
-                                    .toList(),
-                              ),
-                            ),*/
                                 Container(
                                   margin: EdgeInsets.all(8),
                                   child: Row(
@@ -165,7 +137,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                           child: Text(process.isEmpty ? 'cpu'.tr : process[0].name.toString(),
-                                                              style: process.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                              style: process.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -234,7 +206,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(maincard.isEmpty ? 'motherboard'.tr : maincard[0].name.toString(),
-                                                            style: maincard.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: maincard.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -303,7 +275,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(ram.isEmpty ? 'ram'.tr : ram[0].name.toString(),
-                                                            style: ram.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: ram.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -372,7 +344,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(graphcard.isEmpty ? 'gpu'.tr : graphcard[0].name.toString(),
-                                                            style: graphcard.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: graphcard.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -441,7 +413,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(pccase.isEmpty ? 'pccase'.tr : pccase[0].name.toString(),
-                                                            style: pccase.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: pccase.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -505,7 +477,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(psu.isEmpty ? 'psu'.tr : psu[0].name.toString(),
-                                                            style: psu.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: psu.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -572,7 +544,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(hdd.isEmpty ? 'hdd'.tr : hdd[0].name.toString(),
-                                                            style: hdd.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: hdd.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -639,7 +611,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(ssd.isEmpty ? 'ssd'.tr : ssd[0].name.toString(),
-                                                            style: ssd.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: ssd.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -706,7 +678,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(monitor.isEmpty ? 'monitor'.tr : monitor[0].name.toString(),
-                                                            style: monitor.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: monitor.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -773,7 +745,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(keyboard.isEmpty ? 'keyboard'.tr : keyboard[0].name.toString(),
-                                                            style: keyboard.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: keyboard.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -840,7 +812,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(mouse.isEmpty ? 'mouse'.tr : mouse[0].name.toString(),
-                                                            style: mouse.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: mouse.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -907,7 +879,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(keyboardmouse.isEmpty ? 'keyboardmouse'.tr : keyboardmouse[0].name.toString(),
-                                                            style: keyboardmouse.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: keyboardmouse.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -974,7 +946,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                                                     children: [
                                                       Align(
                                                         child: Text(headspeaker.isEmpty ? 'headspeaker'.tr : headspeaker[0].name.toString(),
-                                                            style: headspeaker.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle),
+                                                            style: headspeaker.isEmpty ? CustomStyle.primaryTextStyle : CustomStyle.pcbuildTextStyle, maxLines: 1,),
                                                         alignment: Alignment.centerLeft,
                                                       ),
                                                       Row(
@@ -1043,7 +1015,7 @@ class _MyHomePageState extends State<PcBuildPage> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text('total'.tr, style: CustomStyle.primaryTextStyle),
-                        Text(totalPrice.toString() + 'currency'.tr, style: CustomStyle.priceTotalTextStyle,
+                        Text(totalPrice.toString() + '.0' + 'currency'.tr, style: CustomStyle.priceTotalTextStyle,
                         ),
                       ],
                     ),

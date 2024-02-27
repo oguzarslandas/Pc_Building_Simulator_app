@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:get/get.dart';
 import 'package:pc_building_simulator/Model/product.dart';
@@ -77,58 +78,61 @@ class _MyHomePageState extends State<BenchmarkPage> {
           body: TabBarView(
             children: <Widget>[
               Center(
-                child: FutureBuilder(
-                  future: APIService.getProduct("0"),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (!snapshot.hasData) {
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection('products').snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
-                    } else {
-                      List<Product> pdata = snapshot.data;
-
-
-                      return ListView.builder(
-                          itemCount: pdata.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              leading: const Icon(Boxicons.bx_chip, color: secondaryPrimaryColor,),
-                              title: Text("${pdata[index].name}", style: CustomStyle.primaryTextStyle,),
-                     //         subtitle: Text("${pdata[index].price}", style: CustomStyle.primaryTextStyle,),
-                              trailing: Text("${pdata[index].benchpoint}" + " pts", style: CustomStyle.priceTextStyle,),
-                              onTap: () {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BenchmarkDetailPage(name: pdata[index].name.toString(), points: pdata[index].benchpoint.toDouble(),)));
-                              },
-                            );
-                          });
                     }
+                    return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                            return snapshot.data!.docs[index]['result'] == '0' ? Card(
+                                child: ListTile(
+                                  leading: const Icon(Boxicons.bx_chip, color: secondaryPrimaryColor,),
+                                  title: Text("${snapshot.data!.docs[index]['name']}", style: CustomStyle.primaryTextStyle,),
+                                  //         subtitle: Text("${pdata[index].price}", style: CustomStyle.primaryTextStyle,),
+                                  trailing: Text("${snapshot.data!.docs[index]['benchpoint']}" + " pts", style: CustomStyle.priceTextStyle,),
+                                  onTap: () {
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BenchmarkDetailPage(
+                                      name: snapshot.data!.docs[index]['name'].toString(), points: double.parse(snapshot.data!.docs[index]['benchpoint']))));
+                                  },
+                                )
+                            ) : SizedBox.shrink();
+                        });
                   },
                 ),
               ),
+/**************************************************************************************************************** */
               Center(
-                child: FutureBuilder(
-                  future: APIService.getProduct("3"),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (!snapshot.hasData) {
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection('products').snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
-                    } else {
-                      List<Product> pdata = snapshot.data;
-
-                      return ListView.builder(
-                          itemCount: pdata.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              leading: Container(
-                                height: MediaQuery.of(context).size.height * 0.032,
-                                  child: Image.asset(graphiccard3)),
-                              title: Text("${pdata[index].name}", style: CustomStyle.primaryTextStyle,),
-                              //         subtitle: Text("${pdata[index].price}", style: CustomStyle.primaryTextStyle,),
-                              trailing: Text("${pdata[index].benchpoint}" + " pts", style: CustomStyle.priceTextStyle,),
-                            );
-                          });
                     }
+                    return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return snapshot.data!.docs[index]['result'] == '3' ? Card(
+                              child: ListTile(
+                                leading: const Icon(Boxicons.bx_chip, color: secondaryPrimaryColor,),
+                                title: Text("${snapshot.data!.docs[index]['name']}", style: CustomStyle.primaryTextStyle,),
+                                //         subtitle: Text("${pdata[index].price}", style: CustomStyle.primaryTextStyle,),
+                                trailing: Text("${snapshot.data!.docs[index]['benchpoint']}" + " pts", style: CustomStyle.priceTextStyle,),
+                                onTap: () {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BenchmarkDetailPage(
+                                    name: snapshot.data!.docs[index]['name'].toString(), points: double.parse(snapshot.data!.docs[index]['benchpoint']))));
+                                },
+                              )
+                          ) : SizedBox.shrink();
+                        });
                   },
                 ),
               ),

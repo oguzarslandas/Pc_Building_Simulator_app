@@ -1,5 +1,7 @@
 import 'package:country_flags/country_flags.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:get/get.dart';
 import 'package:pc_building_simulator/Utils/colors.dart';
@@ -20,6 +22,8 @@ class _TopBarState extends State<DrawerList> {
   bool ispopup = false;
   bool ispopupfolders = false;
   bool ispopuplocation = false;
+  bool ispopupComparePC = false;
+  bool ispopupCompareRam = false;
 
   bool isSelected = false;
 
@@ -53,15 +57,18 @@ class _TopBarState extends State<DrawerList> {
                         },
                         title: Row(
                           children: [
-                            Icon(Boxicons.bxs_wrench, color: thirdPrimaryColor,),
+                            Icon(Boxicons.bx_chip, color: thirdPrimaryColor,),
                             SizedBox(width: 5),
-                            Text(
-                              'parts'.tr,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'Red Hat Display',
-                                  color: thirdPrimaryColor),
+                            Expanded(
+                              child: Text(
+                                'CPU Karşılaştırmaları',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Red Hat Display',
+                                    color: thirdPrimaryColor),
+                              ),
                             ),
                           ],
                         ),
@@ -71,7 +78,7 @@ class _TopBarState extends State<DrawerList> {
                         ),
                       ),
                     ),
-                    ispopup ? _pcPartsList() : const SizedBox.shrink(),
+                    ispopup ? _cpuCompareList() : const SizedBox.shrink(),
                     Container(
                       decoration: BoxDecoration(
                           border: Border.all(width: 0, color: thirdPrimaryColor)),
@@ -86,15 +93,18 @@ class _TopBarState extends State<DrawerList> {
                         },
                         title: Row(
                           children: [
-                            Icon(Boxicons.bxs_bar_chart_alt_2, color: thirdPrimaryColor,),
+                            Icon(Boxicons.bx_chip, color: thirdPrimaryColor,),
                             SizedBox(width: 5),
-                            Text(
-                              'benchmarks'.tr,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'Red Hat Display',
-                                  color: thirdPrimaryColor),
+                            Expanded(
+                              child: Text(
+                                'GPU Karşılaştırmaları',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Red Hat Display',
+                                    color: thirdPrimaryColor),
+                              ),
                             ),
                           ],
                         ),
@@ -104,7 +114,82 @@ class _TopBarState extends State<DrawerList> {
                         ),
                       ),
                     ),
-                    ispopupfolders ? _benchmarkList() : const SizedBox.shrink(),
+                    ispopupfolders ? _gpuCompareList() : const SizedBox.shrink(),
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0, color: thirdPrimaryColor)),
+                      child: ListTile(
+                        //    leading: Icon(BoxIcons.bx_edit),
+                        onTap: () {
+                          setState(() {
+                            ispopupComparePC = !ispopupComparePC;
+                            ispopup = false;
+                            ispopuplocation = false;
+                            ispopupfolders = false;
+                          });
+                        },
+                        title: Row(
+                          children: [
+                            Icon(Icons.computer_rounded, color: thirdPrimaryColor,),
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: Text(
+                                'PC Karşılaştırmaları',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Red Hat Display',
+                                    color: thirdPrimaryColor),
+                              ),
+                            ),
+                          ],
+                        ),
+                        trailing: Icon(
+                          ispopupComparePC ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_right_rounded,
+                          size: 28,
+                        ),
+                      ),
+                    ),
+                    ispopupComparePC ? _pcCompareList() : const SizedBox.shrink(),
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0, color: thirdPrimaryColor)),
+                      child: ListTile(
+                        //    leading: Icon(BoxIcons.bx_edit),
+                        onTap: () {
+                          setState(() {
+                            ispopupCompareRam = !ispopupCompareRam;
+                            ispopup = false;
+                            ispopuplocation = false;
+                            ispopupfolders = false;
+                            ispopupComparePC = false;
+                          });
+                        },
+                        title: Row(
+                          children: [
+                            Icon(Icons.developer_board, color: thirdPrimaryColor,),
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: Text(
+                                'RAM Karşılaştırmaları',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Red Hat Display',
+                                    color: thirdPrimaryColor),
+                              ),
+                            ),
+                          ],
+                        ),
+                        trailing: Icon(
+                          ispopupCompareRam ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_right_rounded,
+                          size: 28,
+                        ),
+                      ),
+                    ),
+                    ispopupCompareRam ? _ramCompareList() : const SizedBox.shrink(),
                     Container(
                       decoration: BoxDecoration(
                           border: Border.all(width: 0, color: thirdPrimaryColor)),
@@ -119,7 +204,7 @@ class _TopBarState extends State<DrawerList> {
                         },
                         title: Row(
                           children: [
-                            Icon(Boxicons.bxs_edit_location, color: thirdPrimaryColor,),
+                            Icon(Boxicons.bxs_map_pin, color: thirdPrimaryColor,),
                             SizedBox(width: 5),
                             Text(
                               'location'.tr,
@@ -145,14 +230,12 @@ class _TopBarState extends State<DrawerList> {
                         //    leading: Icon(BoxIcons.bx_edit),
                         onTap: () {
                           setState(() {
-                            ispopuplocation = !ispopuplocation;
-                            ispopup = false;
-                            ispopupfolders = false;
+
                           });
                         },
                         title: Row(
                           children: [
-                            Icon(Boxicons.bxs_message_alt_detail, color: thirdPrimaryColor,),
+                            Icon(Boxicons.bx_message_alt_detail, color: thirdPrimaryColor,),
                             SizedBox(width: 5),
                             Text(
                               'feedback'.tr,
@@ -163,10 +246,6 @@ class _TopBarState extends State<DrawerList> {
                                   color: thirdPrimaryColor),
                             ),
                           ],
-                        ),
-                        trailing: Icon(
-                          ispopuplocation ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_right_rounded,
-                          size: 28,
                         ),
                       ),
                     ),
@@ -185,7 +264,7 @@ class _TopBarState extends State<DrawerList> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('CodeGarage', style: CustomStyle.boldTitleTextStyle,),
+                    Text('Codefit', style: CustomStyle.boldTitleTextStyle,),
                     Text('v1.0.0', style: CustomStyle.titleTextStyle,)
                   ],
                 )
@@ -197,20 +276,20 @@ class _TopBarState extends State<DrawerList> {
     );
   }
 
-  _pcPartsList() {
+  _cpuCompareList() {
     return Container(
       margin: const EdgeInsets.only(left: 5),
-      height: MediaQuery.of(context).size.height * 0.27,
+      height: MediaQuery.of(context).size.height * 0.30,
       child: ListView(
         children: [
           ListTile(
             //    leading: Icon(BoxIcons.bx_edit),
             title: Row(
               children: [
-                Icon(Boxicons.bxs_circle, color: thirdPrimaryColor, size: 10,),
+                Icon(Boxicons.bx_line_chart, color: thirdPrimaryColor, size: 20,),
                 SizedBox(width: 5),
                 Text(
-                  'cpu'.tr,
+                  'Üst Düzey',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -228,15 +307,18 @@ class _TopBarState extends State<DrawerList> {
             //  leading: Icon(BoxIcons.bx_calendar),
             title: Row(
               children: [
-                Icon(Boxicons.bxs_circle, color: thirdPrimaryColor, size: 10,),
+                Icon(Boxicons.bxs_badge_dollar, color: thirdPrimaryColor, size: 20,),
                 SizedBox(width: 5),
-                Text(
-                  'motherboard'.tr,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Red Hat Display',
-                      color: thirdPrimaryColor),
+                Expanded(
+                  child: Text(
+                    'En iyi Fiyat/Performans',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Red Hat Display',
+                        color: thirdPrimaryColor),
+                  ),
                 ),
               ],
             ),
@@ -252,10 +334,34 @@ class _TopBarState extends State<DrawerList> {
             },
             title: Row(
               children: [
-                Icon(Boxicons.bxs_circle, color: thirdPrimaryColor, size: 10,),
+                Icon(Boxicons.bx_desktop, color: thirdPrimaryColor, size: 20,),
                 SizedBox(width: 5),
                 Text(
-                  'gpu'.tr,
+                  'Masaüstü CPU',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Red Hat Display',
+                      color: thirdPrimaryColor),
+                ),
+              ],
+            ),
+            trailing: const Icon(
+              Icons.keyboard_arrow_right_rounded,
+              size: 20,
+            ),
+          ),
+          ListTile(
+            //    leading: Icon(BoxIcons.bx_edit),
+            onTap: () {
+              Navigator.pushNamed(context, '/activeedu');
+            },
+            title: Row(
+              children: [
+                Icon(Boxicons.bx_laptop, color: thirdPrimaryColor, size: 20,),
+                SizedBox(width: 5),
+                Text(
+                  'Notebook CPU',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -274,10 +380,10 @@ class _TopBarState extends State<DrawerList> {
     );
   }
 
-  _benchmarkList() {
+  _gpuCompareList() {
     return Container(
       margin: const EdgeInsets.only(left: 5),
-      height: MediaQuery.of(context).size.height * 0.18,
+      height: MediaQuery.of(context).size.height * 0.22,
       child: ListView(
         children: [
           ListTile(
@@ -287,10 +393,10 @@ class _TopBarState extends State<DrawerList> {
             },
             title: const Row(
               children: [
-                Icon(Boxicons.bxs_circle, color: thirdPrimaryColor, size: 10,),
+                Icon(Boxicons.bx_line_chart, color: thirdPrimaryColor, size: 20,),
                 SizedBox(width: 5),
                 Text(
-                  'CPU Benchmarks',
+                  'Üst Düzey',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -311,10 +417,179 @@ class _TopBarState extends State<DrawerList> {
             },
             title: const Row(
               children: [
-                Icon(Boxicons.bxs_circle, color: thirdPrimaryColor, size: 10,),
+                Icon(Boxicons.bxs_badge_dollar, color: thirdPrimaryColor, size: 20,),
+                SizedBox(width: 5),
+                Expanded(
+                  child: Text(
+                    'En iyi Fiyat/Performans',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Red Hat Display',
+                        color: thirdPrimaryColor),
+                  ),
+                ),
+              ],
+            ),
+            trailing: const Icon(
+              Icons.keyboard_arrow_right_rounded,
+              size: 20,
+            ),
+          ),
+          ListTile(
+            //    leading: Icon(BoxIcons.bx_edit),
+            onTap: () {
+              Navigator.pushNamed(context, '/mydoc');
+            },
+            title: const Row(
+              children: [
+                Icon(Boxicons.bx_trending_up, color: thirdPrimaryColor, size: 20,),
                 SizedBox(width: 5),
                 Text(
-                  'GPU Benchmarks',
+                  'En iyi Performans',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Red Hat Display',
+                      color: thirdPrimaryColor),
+                ),
+              ],
+            ),
+            trailing: const Icon(
+              Icons.keyboard_arrow_right_rounded,
+              size: 20,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _pcCompareList() {
+    return Container(
+      margin: const EdgeInsets.only(left: 5),
+      height: MediaQuery.of(context).size.height * 0.22,
+      child: ListView(
+        children: [
+          ListTile(
+            //    leading: Icon(BoxIcons.bx_edit),
+            onTap: () {
+              Navigator.pushNamed(context, '/mydoc');
+            },
+            title: const Row(
+              children: [
+                Icon(Boxicons.bx_desktop, color: thirdPrimaryColor, size: 20,),
+                SizedBox(width: 5),
+                Text(
+                  'En iyi Masaüstü',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Red Hat Display',
+                      color: thirdPrimaryColor),
+                ),
+              ],
+            ),
+            trailing: const Icon(
+              Icons.keyboard_arrow_right_rounded,
+              size: 20,
+            ),
+          ),
+          ListTile(
+            //    leading: Icon(BoxIcons.bx_edit),
+            onTap: () {
+              Navigator.pushNamed(context, '/mydoc');
+            },
+            title: const Row(
+              children: [
+                Icon(Boxicons.bx_laptop, color: thirdPrimaryColor, size: 20,),
+                SizedBox(width: 5),
+                Text(
+                  'En iyi Notebook',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Red Hat Display',
+                      color: thirdPrimaryColor),
+                ),
+              ],
+            ),
+            trailing: const Icon(
+              Icons.keyboard_arrow_right_rounded,
+              size: 20,
+            ),
+          ),
+          ListTile(
+            //    leading: Icon(BoxIcons.bx_edit),
+            onTap: () {
+              Navigator.pushNamed(context, '/mydoc');
+            },
+            title: const Row(
+              children: [
+                Icon(Icons.router_outlined, color: thirdPrimaryColor, size: 22,),
+                SizedBox(width: 5),
+                Text(
+                  'En iyi Sunucular',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Red Hat Display',
+                      color: thirdPrimaryColor),
+                ),
+              ],
+            ),
+            trailing: const Icon(
+              Icons.keyboard_arrow_right_rounded,
+              size: 20,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _ramCompareList() {
+    return Container(
+      margin: const EdgeInsets.only(left: 5),
+      height: MediaQuery.of(context).size.height * 0.15,
+      child: ListView(
+        children: [
+          ListTile(
+            //    leading: Icon(BoxIcons.bx_edit),
+            onTap: () {
+              Navigator.pushNamed(context, '/mydoc');
+            },
+            title: const Row(
+              children: [
+                Icon(Boxicons.bx_desktop, color: thirdPrimaryColor, size: 20,),
+                SizedBox(width: 5),
+                Text(
+                  'En iyi Okuma',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Red Hat Display',
+                      color: thirdPrimaryColor),
+                ),
+              ],
+            ),
+            trailing: const Icon(
+              Icons.keyboard_arrow_right_rounded,
+              size: 20,
+            ),
+          ),
+          ListTile(
+            //    leading: Icon(BoxIcons.bx_edit),
+            onTap: () {
+              Navigator.pushNamed(context, '/mydoc');
+            },
+            title: const Row(
+              children: [
+                Icon(Boxicons.bx_laptop, color: thirdPrimaryColor, size: 20,),
+                SizedBox(width: 5),
+                Text(
+                  'En iyi Yazma',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,

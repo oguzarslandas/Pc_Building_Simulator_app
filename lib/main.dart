@@ -1,4 +1,5 @@
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,9 +11,15 @@ import 'package:pc_building_simulator/Screens/LocationScren.dart';
 import 'package:pc_building_simulator/Screens/LoginScren.dart';
 import 'package:pc_building_simulator/Screens/SplashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
+var uuid = Uuid();
 late SharedPreferences prefs;
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 

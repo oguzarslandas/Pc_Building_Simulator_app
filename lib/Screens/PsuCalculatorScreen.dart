@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:get/get.dart';
 import 'package:pc_building_simulator/Model/product.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
+import 'package:pc_building_simulator/resources/firestore_methods.dart';
 
 class KeyValueModel {
   final String key;
@@ -58,6 +60,8 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
   int uniqueId = 0;
 
   int recommedPSU = 0;
+
+  final FireStoreMethods _firestoreService = FireStoreMethods();
 
   /// CPU
 
@@ -161,112 +165,60 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
   List<int> totalWatt = [0, 0, 0, 0, 0, 0];
 
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   int get hashCode => super.hashCode;
 
+  var documents = [];
+  String selectedDocument = '';
 
-  static getCpu(String result, socket) async {
+  fetchData(brand, result) async {
     List<Product> products = [];
-
-    var url = Uri.parse("${Config.apiURL}get_product");
     try {
-      final res = await http.get(url);
 
-      if (res.statusCode == 200) {
-        var data = jsonDecode(res.body);
-        print(data);
+      var data = await _firestoreService.getAllDocuments();
 
-        data.forEach((value) => {
-          if(value['presult'] == result && value['psocket'] == socket) {
-            products.add(Product(
-                name: value['pname'],
-                brand: value['pbrand'],
-                desc: value['pdesc'],
-                price: value['pprice'],
-                socket: value['psocket'],
-                benchpoint: value['pbenchpoint'],
-                watt: value['pwatt'],
-                result: value['presult']
-            ))
-          }
-        });
+        documents = data;
+        print(documents);
+        if (documents.isNotEmpty) {
 
-        return products;
-
-      } else {
-        return [];
-      }
-    } catch (e) {
+          data.forEach((value) {
+            if(value['result'] == result && value['brand'] == brand) {
+              products.add(Product(
+                  name: value['name'],
+                  brand: value['brand'],
+                  desc: value['desc'],
+                  price: value['price'],
+                  socket: value['socket'],
+                  benchpoint: value['benchpoint'],
+                  watt: value['watt'],
+                  result: value['result'],
+                  uid: value['uid'],
+                  imgUrl: value['imgUrl'],
+                  buyUrl: value['buyUrl'],
+                  classcpu: value['classcpu'],
+                  clockspeed: value['clockspeed'],
+                  turbospeed: value['turbospeed'],
+                  core: value['core'],
+                  thread: value['thread'],
+                  cache: value['cache'],
+              ));
+            };
+          });
+          return products;
+        } else {
+          return [];
+        }
+    }
+    catch (e) {
       print(e.toString());
     }
   }
 
-  static getGpu(String result, brand) async {
-    List<Product> products = [];
-
-    var url = Uri.parse("${Config.apiURL}get_product");
-    try {
-      final res = await http.get(url);
-
-      if (res.statusCode == 200) {
-        var data = jsonDecode(res.body);
-        print(data);
-
-        data.forEach((value) => {
-          if(value['presult'] == result && value['pbrand'] == brand) {
-            products.add(Product(
-                name: value['pname'],
-                brand: value['pbrand'],
-                desc: value['pdesc'],
-                price: value['pprice'],
-                socket: value['psocket'],
-                benchpoint: value['pbenchpoint'],
-                watt: value['pwatt'],
-                result: value['presult']
-            ))
-          }
-        });
-
-        return products;
-
-      } else {
-        return [];
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  static getSocket(String brand) async {
-    List<Socket> sockets = [];
-
-    var url = Uri.parse("${Config.apiURL}get_socket");
-    try {
-      final res = await http.get(url);
-
-      if (res.statusCode == 200) {
-        var data = jsonDecode(res.body);
-        print(data);
-
-        data.forEach((value) => {
-          if(value['pbrand'] == brand) {
-            sockets.add(Socket(
-                name: value['pname'],
-                brand: value['pbrand']
-            ))
-          }
-        });
-
-        return sockets;
-
-      } else {
-        return [];
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -289,25 +241,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
       //  bottomNavigationBar: BottomNavBar(),
       body: Stack(
         children: <Widget>[
-          /*        Container(
-            // Here the height of the container is 45% of our total height
-            height: MediaQuery.of(context).size.height * .20,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(50),
-                  bottomRight: Radius.circular(50)
-              ),
-              image: DecorationImage(
-                  alignment: Alignment.centerLeft,
-                  image: const AssetImage(
-                      appLogo),
-                  colorFilter: ColorFilter.mode(
-                    Colors.grey.withOpacity(0.3),
-                    BlendMode.modulate,
-                  )),
-            ),
-          ),*/
+
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -389,54 +323,10 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                 .toList(),
                                           ),
                                         ),
+
                                         SizedBox( height: 8),
                                         processBrand != null ? FutureBuilder(
-                                          future: getSocket(processBrand!),
-                                          builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                            if (!snapshot.hasData) {
-                                              return const Center(
-                                                child: spinkitLoading,
-                                              );
-                                            } else {
-                                              List<Socket> pdata = snapshot.data;
-
-                                              return Container(
-                                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                                decoration: CustomStyle.secondBoxDecoration,
-                                                child: DropdownButton<String>(
-                                                  isExpanded: true,
-                                                  value: processSocket,
-                                                  dropdownColor: primaryColor,
-                                                  icon: const Icon(Icons.keyboard_arrow_down,
-                                                      color: secondaryPrimaryColor),
-                                                  elevation: 16,
-                                                  style: CustomStyle.thirdTextStyle,
-                                                  underline: Container(
-                                                    height: 0,
-                                                    color: primaryColor,
-                                                  ),
-                                                  onChanged: (String? newValue) {
-                                                    setState(() {
-                                                      processSocket = null;
-                                                      processModel = null;
-                                                      processSocket = newValue;
-                                                    });
-                                                  },
-                                                  hint: Text('socket'.tr, style: CustomStyle.thirdTextStyle,),
-                                                  items: pdata
-                                                      .map((data) => DropdownMenuItem<String>(
-                                                    child: Text(data.name.toString()),
-                                                    value: data.name.toString(),
-                                                  ))
-                                                      .toList(),
-                                                ),
-                                              );
-                                            }
-                                          },
-                                        ) : SizedBox.shrink(),
-                                        SizedBox( height: 8),
-                                        processSocket != null ? FutureBuilder(
-                                          future: getCpu("0", processSocket),
+                                          future: fetchData(processBrand, '0'),
                                           builder: (BuildContext context, AsyncSnapshot snapshot) {
                                             if (!snapshot.hasData) {
                                               return const Center(
@@ -465,10 +355,10 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                       processModel = newValue;
                                                       print(processModel);
 
-                                                      pdata.forEach((value) => {
+                                                      pdata.forEach((value) {
                                                         if(value.name == processModel) {
-                                                          processModelWatt = value.watt
-                                                        }
+                                                          processModelWatt = value.watt;
+                                                        };
                                                       });
                                                       print(processModelWatt);
 
@@ -484,7 +374,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                   items: pdata
                                                       .map((data) => DropdownMenuItem<String>(
                                                     child: Text(data.name.toString()),
-                                                    value: data.name.toString(),
+                                                    value: data.name,
                                                   ))
                                                       .toList(),
                                                 ),
@@ -565,7 +455,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                         ),
                                         SizedBox( height: 8),
                                         gpuBrand != null ? FutureBuilder(
-                                          future: getGpu("3", gpuBrand),
+                                          future: fetchData(gpuBrand, "3"),
                                           builder: (BuildContext context, AsyncSnapshot snapshot) {
                                             if (!snapshot.hasData) {
                                               return const Center(
@@ -595,10 +485,10 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                                                       gpuCount = null;
                                                       gpuModel = newValue;
 
-                                                      pdata.forEach((value) => {
+                                                      pdata.forEach((value) {
                                                         if(value.name == gpuModel) {
-                                                          gpuModelWatt = value.watt
-                                                        }
+                                                          gpuModelWatt = value.watt;
+                                                        };
                                                       });
                                                       print(gpuModelWatt);
 

@@ -2,10 +2,29 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:material_dialogs/dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import '../Utils/colors.dart';
+
+
+pickImage(ImageSource source) async {
+  final ImagePicker imagePicker = ImagePicker();
+  XFile? file = await imagePicker.pickImage(source: source);
+  if (file != null) {
+    return await file.readAsBytes();
+  }
+}
+
+// for displaying snackbars
+showSnackBar(BuildContext context, String text) {
+  return ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(text),
+    ),
+  );
+}
 
 class CustomStyle {
   static const TextStyle primaryTextStyle = TextStyle(
@@ -195,9 +214,9 @@ const spinkitSecondary = SpinKitChasingDots(
 );
 
 
-const spinkitLoading = SpinKitPianoWave(
+const spinkitLoading = SpinKitRotatingCircle(
   color: secondaryPrimaryColor,
-  size: 35.0,
+  size: 33.0,
 );
 
 showToast(String message) {

@@ -23,7 +23,7 @@ class CategoryCard extends StatelessWidget {
         Stack(
           children: [
             InkWell(
-              splashColor: Colors.amber,
+              splashColor: Colors.transparent,
               onTap: press!,
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 30),
