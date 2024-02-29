@@ -12,6 +12,7 @@ import 'package:pc_building_simulator/Screens/LoginScren.dart';
 import 'package:pc_building_simulator/Screens/SplashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:ui' as ui;
 
 var uuid = Uuid();
 late SharedPreferences prefs;
@@ -44,17 +45,29 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    String deviceLanguage = ui.window.locale.languageCode;
+    print(deviceLanguage);
+
+    List<String> LocaleList = ['en', 'de', 'fr', 'hi', 'zh', 'es', 'it', 'tr'];
+
+    if (LocaleList.contains(deviceLanguage)) {
+      print(deviceLanguage);
+    } else {
+      deviceLanguage = 'en';
+    }
+
     return GetMaterialApp(
       // theme: Provider.of<ThemeModel>(context).currentTheme,
       debugShowCheckedModeBanner: false,
       translations: Messages(),
-      locale: Locale('en', 'UK'),
-      fallbackLocale: Locale('en', 'UK'),
+      locale: Locale(deviceLanguage),
+      fallbackLocale:Locale(deviceLanguage),
  //     home: SplashScreen(),
       initialRoute: '/',
       routes: {
         '/': (context) => SplashPage(),
-        '/login': (context) => LocationPage(),
+ //       '/login': (context) => LocationPage(),
         '/dashboard': (context) => DashboardPage(),
         '/homepage': (context) => Home(),
       },

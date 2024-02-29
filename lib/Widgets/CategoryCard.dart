@@ -3,13 +3,13 @@ import 'package:pc_building_simulator/Utils/common.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {
-  final String svgSrc;
+  final String? svgSrc;
   final String title;
   final Color color;
   final Function()? press;
   const CategoryCard({
     Key? key,
-    required this.svgSrc,
+    this.svgSrc,
     required this.title,
     required this.press,
     required this.color,
@@ -43,7 +43,7 @@ class CategoryCard extends StatelessWidget {
               child: SizedBox(
                   width: 110,
                   height: 110,
-                  child: Image.asset(svgSrc)),
+                  child: Image.asset(svgSrc!)),
             ),
           ]
         ),

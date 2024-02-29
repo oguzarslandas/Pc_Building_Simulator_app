@@ -42,3 +42,25 @@ const update_booking_status = Color(0xFFFD6922);
 const cancel_booking = Color(0xFFC41520);
 const payment_message_status = Color(0xFFFFBD49);
 const defaultActivityStatus = Color(0xFF3CAE5C);
+
+class AppColors{
+  static const primaryColor1 =  Color(0xFF7A8DEF);
+  static const primaryColor2 =  Color(0xFF9DCEFF);
+
+  static const secondaryColor1 =  Color(0xFFC58BF2);
+  static const secondaryColor2 =  Color(0xFFEEA4CE);
+
+  static const thirdyColor = Color(0x00FF4668DC);
+  static const fortyColor = Color(0x00FFAF6AB3);
+
+  static const whiteColor = Color(0xFFFFFFFF);
+  static const blackColor = Color(0xFF1D1617);
+  static const grayColor = Color(0xFF7B6F72);
+  static const lightGrayColor = Color(0xFFF7F8F8);
+  static const midGrayColor = Color(0xFFADA4A5);
+
+  static List<Color> get primaryG => [secondaryColor1,secondaryColor2];
+  static List<Color> get secondaryG => [thirdyColor,fortyColor];
+
+  static List<Color> get animationColor => [whiteColor, Colors.amber.shade100,whiteColor];
+}

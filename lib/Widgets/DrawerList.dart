@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:get/get.dart';
+import 'package:pc_building_simulator/Screens/BestPricePerformanceGPU.dart';
 import 'package:pc_building_simulator/Utils/colors.dart';
 import 'package:pc_building_simulator/Utils/common.dart';
+
+import '../Screens/BestPricePerformanceCPU.dart';
 
 class DrawerList extends StatefulWidget {
   const DrawerList({
@@ -305,6 +308,12 @@ class _TopBarState extends State<DrawerList> {
           ),
           ListTile(
             //  leading: Icon(BoxIcons.bx_calendar),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BestPriceCpuPage()),
+              );
+            },
             title: Row(
               children: [
                 Icon(Boxicons.bxs_badge_dollar, color: thirdPrimaryColor, size: 20,),
@@ -413,7 +422,10 @@ class _TopBarState extends State<DrawerList> {
           ListTile(
             //    leading: Icon(BoxIcons.bx_edit),
             onTap: () {
-              Navigator.pushNamed(context, '/mydoc');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BestPriceGpuPage()),
+              );
             },
             title: const Row(
               children: [

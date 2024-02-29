@@ -37,6 +37,10 @@ dependencies:
   firebase_storage: ^11.2.3
   uuid: ^3.0.5
   image_picker: ^0.8.4+4
+  flutter_animator: ^3.2.2
+  cached_network_image: ^3.1.0
+  geolocator: ^7.6.2
+  geocoding: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +53,7 @@ flutter:
     - 'assets/pages/'
     - 'assets/secrets/'
     - 'assets/widgets/'
+    - 'assets/icons/'
   fonts:
     - family: 'lato'
       fonts:

@@ -2,14 +2,18 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_animator/flutter_animator.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:pc_building_simulator/Network/Api/ApiConfig.dart';
-import 'package:pc_building_simulator/Screens/BestSystemScreen.dart';
+import 'package:pc_building_simulator/Screens/BestPC.dart';
 import 'package:pc_building_simulator/Screens/PcBuildScreen.dart';
 import 'package:pc_building_simulator/Screens/PsuCalculatorScreen.dart';
+import 'package:pc_building_simulator/Screens/ShopScreen.dart';
+import 'package:pc_building_simulator/Screens/ShoppingScreen.dart';
 import 'package:pc_building_simulator/Screens/SystemBenchmarkScreen.dart';
-import 'package:pc_building_simulator/Screens/SystemListScreen.dart';
 import 'package:pc_building_simulator/Utils/colors.dart';
 import 'package:pc_building_simulator/Utils/common.dart';
 import 'package:pc_building_simulator/Utils/images.dart';
@@ -31,6 +35,37 @@ class DashboardPage extends StatefulWidget {
 
 class _MyHomePageState extends State<DashboardPage> {
 
+  static const colorizeTextStyle = TextStyle(
+    fontSize: 20.0,
+    fontWeight: FontWeight.w600,
+    fontFamily: 'Red Hat Display',
+  );
+
+  Future<void> _checkLocationPermission(BuildContext context) async {
+
+    final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
+    LocationPermission permission = await _geolocatorPlatform.checkPermission();
+
+    if (permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
+      print('tam konum izni verildi!');
+    }
+    else if (permission == LocationPermission.denied) {
+      permission = await _geolocatorPlatform.requestPermission();
+      if (permission == LocationPermission.always) {
+        print('tam konum izni verildi');
+
+      } else if(permission == LocationPermission.whileInUse) {
+        print('konum yalnızca kullanırken izin verildi');
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    _checkLocationPermission(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +79,17 @@ class _MyHomePageState extends State<DashboardPage> {
         title: const Text('PC CREATOR', style: CustomStyle
             .primaryTextStyle,),
         centerTitle: true,
+    /*    flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: AppColors.primaryG, // Başlangıç ve bitiş renkleri
+              begin: Alignment.topLeft, // Başlangıç noktası
+              end: Alignment.bottomRight, // Bitiş noktası
+              stops: [0.0, 1.0], // Başlangıç ve bitiş renklerinin konumu
+              tileMode: TileMode.clamp, // Eğer gradient boyunca bir alan dışına taşıyorsa, nasıl davranacağını belirler
+            ),
+          ),
+        ),*/
         backgroundColor: primaryColor,
         iconTheme: const IconThemeData(color: thirdPrimaryColor),
         elevation: 1,
@@ -51,84 +97,94 @@ class _MyHomePageState extends State<DashboardPage> {
       //  bottomNavigationBar: BottomNavBar(),
       body: Stack(
         children: <Widget>[
-          /*        Container(
-            // Here the height of the container is 45% of our total height
-            height: MediaQuery.of(context).size.height * .20,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(50),
-                  bottomRight: Radius.circular(50)
-              ),
-              image: DecorationImage(
-                  alignment: Alignment.centerLeft,
-                  image: const AssetImage(
-                      appLogo),
-                  colorFilter: ColorFilter.mode(
-                    Colors.grey.withOpacity(0.3),
-                    BlendMode.modulate,
-                  )),
-            ),
-          ),*/
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-         /**         const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      //  color: primaryColor.withOpacity(0.5)
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            width: MediaQuery.of(context).size.width * 0.75,
-                            //     color: Colors.cyan,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  HeartBeat(
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: LinearGradient(
+                          colors: AppColors.primaryG, // Başlangıç ve bitiş renkleri
+                          begin: Alignment.bottomLeft, // Başlangıç noktası
+                          end: Alignment.topRight, // Bitiş noktası
+                          stops: [0.0, 1.0], // Başlangıç ve bitiş renklerinin konumu
+                          tileMode: TileMode.clamp, // Eğer gradient boyunca bir alan dışına taşıyorsa, nasıl davranacağını belirler
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) =>  ShoppingPage()),
+                                );
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                width: MediaQuery.of(context).size.width * 0.75,
+                                height: MediaQuery.of(context).size.height * 0.08,
+                                //     color: Colors.cyan,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: const [
-                                        Text(
-                                          'AYŞE YILMAZ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700, fontSize: 18),
-                                          maxLines: 1,
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            AnimatedTextKit(
+                                              animatedTexts: [
+                                                ColorizeAnimatedText(
+                                                  'HEMEN SATMAYA BAŞLA!',
+                                                  textStyle: colorizeTextStyle,
+                                                  colors: AppColors.animationColor,
+                                                  speed: const Duration(milliseconds: 200),
+                                                ),
+                                              ],
+                                              isRepeatingAnimation: true,
+                                              repeatForever: true,
+
+                                              onTap: () {
+                                                print("Tap Event");
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (context) => ShoppingPage()),
+                                                );
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          'Yazılım Mühendisi',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300, fontSize: 18),
-                                          maxLines: 1,
+                                        Align(
+                                          alignment: Alignment.centerRight,
+                                          child: SizedBox(
+                                              width: 60,
+                                              height: 60,
+                                              child: Image.asset(pckasa2)),
                                         ),
                                       ],
-                                    ),
+                                    )
                                   ],
-                                )
-                              ],
+                                ),
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),*/
-
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.04,
                   ),
+
+
                   Expanded(
                     child: Container(
                       child: GridView.count(
@@ -140,7 +196,7 @@ class _MyHomePageState extends State<DashboardPage> {
                         children: [
                           CategoryCard(
                             title: 'Ekle',
-                            svgSrc: graphiccard3,
+                            svgSrc: psu,
                             press: () {
                               Navigator.push(
                                 context,
@@ -188,7 +244,7 @@ class _MyHomePageState extends State<DashboardPage> {
                             press: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => SystemListPage()),
+                                MaterialPageRoute(builder: (context) => BestPcPage()),
                               );
                             },
                             color: cardColor,
@@ -199,7 +255,7 @@ class _MyHomePageState extends State<DashboardPage> {
                             press: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => BestSystemPage()),
+                                MaterialPageRoute(builder: (context) => BestPcPage()),
                               );
                             },
                             color: cardColor,

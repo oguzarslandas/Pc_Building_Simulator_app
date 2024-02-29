@@ -11,6 +11,7 @@ const ram = 'assets/images/ram.png';
 const storage = 'assets/images/storage.png';
 const application = 'assets/images/application.png';
 const pckasa = 'assets/images/pckasa.png';
+const pckasa2 = 'assets/images/pckasa.jpg';
 const buyonamazon = 'assets/images/buyamazon.png';
 const noimage = 'assets/images/noimage.jpg';
 const bench = 'assets/images/bench.png';

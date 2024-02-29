@@ -195,6 +195,7 @@ class _MyHomePageState extends State<PsuCalculatorPage> {
                   price: value['price'],
                   socket: value['socket'],
                   benchpoint: value['benchpoint'],
+                avgMark: value['avgMark'],
                   watt: value['watt'],
                   result: value['result'],
                   uid: value['uid'],

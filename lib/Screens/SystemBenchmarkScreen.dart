@@ -87,18 +87,59 @@ class _MyHomePageState extends State<BenchmarkPage> {
                         child: CircularProgressIndicator(),
                       );
                     }
+
+                    List<Product> products = snapshot.data!.docs.map((doc) {
+                      // JsonQueryDocumentSnapshot'u Product'a dönüştür
+                      Map<String, dynamic> data = doc.data();
+                      return Product(
+                        name: data['name'],
+                        price: data['price'],
+                        uid: data['uid'],
+                        brand: data['brand'],
+                        desc: data['desc'],
+                        socket: data['socket'],
+                        benchpoint: data['benchpoint'],
+                        avgMark: data['avgMark'],
+                        watt: data['watt'],
+                        result: data['result'],
+                        imgUrl: data['imgUrl'],
+                        buyUrl: data['buyUrl'],
+                        classcpu: data['classcpu'],
+                        clockspeed: data['clockspeed'],
+                        turbospeed: data['turbospeed'],
+                        core: data['core'],
+                        thread: data['thread'],
+                        cache: data['cache'],
+                      );
+                    }).toList();
+                    products.sort((a, b) => b.benchpoint.compareTo(a.benchpoint));
+
                     return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
+                        itemCount: products.length,
                         itemBuilder: (BuildContext context, int index) {
-                            return snapshot.data!.docs[index]['result'] == '0' ? Card(
+                            return products[index].result == '0' ? Card(
                                 child: ListTile(
                                   leading: const Icon(Boxicons.bx_chip, color: secondaryPrimaryColor,),
-                                  title: Text("${snapshot.data!.docs[index]['name']}", style: CustomStyle.primaryTextStyle,),
+                                  title: Text("${products[index].name}", style: CustomStyle.primaryTextStyle,),
                                   //         subtitle: Text("${pdata[index].price}", style: CustomStyle.primaryTextStyle,),
-                                  trailing: Text("${snapshot.data!.docs[index]['benchpoint']}" + " pts", style: CustomStyle.priceTextStyle,),
+                                  trailing: Text("${products[index].benchpoint}" + " pts", style: CustomStyle.priceTextStyle,),
                                   onTap: () {
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BenchmarkDetailPage(
-                                      name: snapshot.data!.docs[index]['name'].toString(), points: double.parse(snapshot.data!.docs[index]['benchpoint']))));
+                                    Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) => BenchmarkDetailPage(
+                                      name: products[index].name.toString(),
+                                        points: double.parse(products[index].benchpoint.toString()),
+                                          result: '0',
+                                          classProd: products[index].classcpu,
+                                          socket: products[index].socket,
+                                          clockspeed: products[index].clockspeed,
+                                          turbospeed: products[index].turbospeed,
+                                          core: products[index].core,
+                                          threads: products[index].thread,
+                                          cache: products[index].cache,
+                                          avgmark: products[index].avgMark,
+
+
+                                        )));
                                   },
                                 )
                             ) : SizedBox.shrink();
@@ -117,18 +158,57 @@ class _MyHomePageState extends State<BenchmarkPage> {
                         child: CircularProgressIndicator(),
                       );
                     }
+
+                    List<Product> products = snapshot.data!.docs.map((doc) {
+                      // JsonQueryDocumentSnapshot'u Product'a dönüştür
+                      Map<String, dynamic> data = doc.data();
+                      return Product(
+                        name: data['name'],
+                        price: data['price'],
+                        uid: data['uid'],
+                        brand: data['brand'],
+                        desc: data['desc'],
+                        socket: data['socket'],
+                        benchpoint: data['benchpoint'],
+                        avgMark: data['avgMark'],
+                        watt: data['watt'],
+                        result: data['result'],
+                        imgUrl: data['imgUrl'],
+                        buyUrl: data['buyUrl'],
+                        classcpu: data['classcpu'],
+                        clockspeed: data['clockspeed'],
+                        turbospeed: data['turbospeed'],
+                        core: data['core'],
+                        thread: data['thread'],
+                        cache: data['cache'],
+                      );
+                    }).toList();
+                    products.sort((a, b) => b.benchpoint.compareTo(a.benchpoint));
+
                     return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
+                        itemCount: products.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return snapshot.data!.docs[index]['result'] == '3' ? Card(
+                          return products[index].result == '3' ? Card(
                               child: ListTile(
                                 leading: const Icon(Boxicons.bx_chip, color: secondaryPrimaryColor,),
-                                title: Text("${snapshot.data!.docs[index]['name']}", style: CustomStyle.primaryTextStyle,),
+                                title: Text("${products[index].name}", style: CustomStyle.primaryTextStyle,),
                                 //         subtitle: Text("${pdata[index].price}", style: CustomStyle.primaryTextStyle,),
-                                trailing: Text("${snapshot.data!.docs[index]['benchpoint']}" + " pts", style: CustomStyle.priceTextStyle,),
+                                trailing: Text("${products[index].benchpoint}" + " pts", style: CustomStyle.priceTextStyle,),
                                 onTap: () {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BenchmarkDetailPage(
-                                    name: snapshot.data!.docs[index]['name'].toString(), points: double.parse(snapshot.data!.docs[index]['benchpoint']))));
+                                  Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) => BenchmarkDetailPage(
+                                    name: products[index].name.toString(),
+                                      points: double.parse(products[index].benchpoint.toString()),
+                                        result: '3',
+                                        classProd: products[index].classcpu,
+                                        socket: products[index].socket,
+                                        clockspeed: products[index].clockspeed,
+                                        turbospeed: products[index].turbospeed,
+                                        core: products[index].core,
+                                        threads: products[index].thread,
+                                        cache: products[index].cache,
+                                        avgmark: products[index].avgMark,
+                                      )));
                                 },
                               )
                           ) : SizedBox.shrink();

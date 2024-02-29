@@ -369,6 +369,17 @@ class _MyHomePageState extends State<AddProductPage> {
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width * 0.9,
                                     child: TextField(
+                                      controller: _classController,
+                                      decoration: const InputDecoration(
+                                        hintText: "Class",
+                                        //       border: InputBorder.none
+                                      ),
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.9,
+                                    child: TextField(
                                       controller: _buyUrlController,
                                       decoration: const InputDecoration(
                                           hintText: "Satın alım URL'si",
@@ -381,17 +392,6 @@ class _MyHomePageState extends State<AddProductPage> {
                                   result == '0' ?
                                       Column(
                                         children: [
-                                          SizedBox(
-                                            width: MediaQuery.of(context).size.width * 0.9,
-                                            child: TextField(
-                                              controller: _classController,
-                                              decoration: const InputDecoration(
-                                                hintText: "Class",
-                                                //       border: InputBorder.none
-                                              ),
-                                              maxLines: 1,
-                                            ),
-                                          ),
                                           SizedBox(
                                             width: MediaQuery.of(context).size.width * 0.9,
                                             child: TextField(

@@ -127,6 +127,7 @@ class _MyHomePageState extends State<ProductPage> {
                             desc: snapshot.data!.docs[index]['desc'],
                             price: snapshot.data!.docs[index]['price'],
                             benchpoint: snapshot.data!.docs[index]['benchpoint'],
+                            avgMark: snapshot.data!.docs[index]['avgMark'],
                             watt: snapshot.data!.docs[index]['watt'],
                             socket: snapshot.data!.docs[index]['socket'],
                             result: snapshot.data!.docs[index]['result'],

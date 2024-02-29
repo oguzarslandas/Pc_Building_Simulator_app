@@ -48,6 +48,13 @@ class CustomStyle {
       fontFamily: 'Red Hat Display'
   );
 
+  static const TextStyle slocationTextStyle = TextStyle(
+      fontSize: 10,
+      color: AppColors.grayColor,
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Red Hat Display'
+  );
+
   static const TextStyle boldTitleTextStyle = TextStyle(
       fontSize: 18,
       color: thirdPrimaryColor,
@@ -63,9 +70,9 @@ class CustomStyle {
   );
 
   static const TextStyle secondTextStyle = TextStyle(
-    fontSize: 16,
+    fontSize: 20,
     color: primaryColor,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.w600,
       fontFamily: 'Red Hat Display'
   );
 

@@ -5,10 +5,11 @@ class Product {
   final String name;
   final String uid;
   final String brand;
-  final String price;
+  final int price;
   final String desc;
   final String socket;
-  final String benchpoint;
+  final int benchpoint;
+  final double avgMark;
   final String watt;
   final String result;
   final String imgUrl;
@@ -28,6 +29,7 @@ class Product {
         required this.desc,
         required this.socket,
         required this.benchpoint,
+        required this.avgMark,
         required this.watt,
         required this.result,
         required this.imgUrl,
@@ -51,16 +53,17 @@ class Product {
         desc: snapshot["desc"],
         socket: snapshot["socket"],
         benchpoint: snapshot["benchpoint"],
+        avgMark: snapshot["avgMark"],
         watt: snapshot["watt"],
         result: snapshot['result'],
         imgUrl: snapshot['imgUrl'],
         buyUrl: snapshot['buyUrl'],
-      classcpu: snapshot['classcpu'],
-      clockspeed: snapshot['clockspeed'],
-      turbospeed: snapshot['turbospeed'],
-      core: snapshot['core'],
-      thread: snapshot['thread'],
-      cache: snapshot['cache'],
+        classcpu: snapshot['classcpu'],
+        clockspeed: snapshot['clockspeed'],
+        turbospeed: snapshot['turbospeed'],
+        core: snapshot['core'],
+        thread: snapshot['thread'],
+        cache: snapshot['cache'],
     );
   }
 
@@ -72,6 +75,7 @@ class Product {
     "desc": desc,
     "socket": socket,
     "benchpoint": benchpoint,
+    "avgMark": avgMark,
     "watt": watt,
     'result': result,
     'imgUrl': imgUrl,

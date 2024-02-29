@@ -105,22 +105,7 @@ class APIService {
         var data = jsonDecode(res.body);
         print(data);
 
-        data.forEach((value) => {
-          if(value['presult'] == result) {
-            products.add(Product(
-                name: value['pname'],
-                brand: value['pbrand'],
-                desc: value['pdesc'],
-                price: value['pprice'],
-                socket: value['psocket'],
-                watt: value['pwatt'],
-                benchpoint: value['pbenchpoint'],
-                result: value['presult'],
-                imgUrl: value['pimgurl'],
-                buyUrl: value['pbuyurl'], uid: '', classcpu: '', clockspeed: '', turbospeed: '', core: '', thread: '', cache: '',
-            ))
-          }
-        });
+
 
         return products;
 

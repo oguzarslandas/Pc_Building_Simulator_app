@@ -25,7 +25,9 @@ class _SplashPageState extends State<SplashPage> {
 
   static const colorizeColors = [
     Colors.black,
-    Colors.white,
+    Colors.black,
+    Colors.white60,
+    Colors.black,
     Colors.black,
   ];
 
@@ -51,7 +53,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 6), () => init());
+    Timer(const Duration(seconds: 6), () =>
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const DashboardPage()))
+    );
   }
 
 
@@ -101,7 +105,7 @@ class _SplashPageState extends State<SplashPage> {
                             'PC CREATOR',
                             textStyle: colorizeTextStyle,
                             colors: colorizeColors,
-                            speed: const Duration(milliseconds: 500),
+                            speed: const Duration(milliseconds: 700),
                           ),
                         ],
                         isRepeatingAnimation: true,
